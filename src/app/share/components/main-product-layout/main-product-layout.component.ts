@@ -79,6 +79,7 @@ export class MainProductLayoutComponent implements OnInit {
       this.pageSize = res.product.length
     })
 
+
   }
 
 
