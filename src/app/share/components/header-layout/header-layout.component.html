@@ -1,0 +1,27 @@
+<header style="min-height: 5vh">
+  <div class="logo_container">
+    <img routerLink="./" src="assets/logo/white.svg" alt="">
+  </div>
+  <div class="headerNav__right">
+    <div *ngIf="!isAuth">
+      <mat-list class="matListCustom">
+        <mat-list-item routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}"
+                       routerLink="/account/user/login">
+          <a mat-raised-button href="javascript:void(0);">Login</a>
+        </mat-list-item>
+        <mat-divider [vertical]="true"></mat-divider>
+        <mat-list-item>
+          <a routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}"
+             routerLink="/account/user/registration" mat-raised-button href="javascript:void(0);">Sign-up</a>
+        </mat-list-item>
+        <mat-divider [vertical]="true"></mat-divider>
+      </mat-list>
+    </div>
+
+    <mat-list *ngIf="isAuth" class="matListCustom">
+      <mat-list-item (click)="logout()">
+        <a mat-raised-button href="javascript:void(0);">Logout</a>
+      </mat-list-item>
+    </mat-list>
+  </div>
+</header>

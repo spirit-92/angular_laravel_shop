@@ -1,0 +1,94 @@
+::ng-deep .mat-step-header .mat-step-icon-selected, .mat-step-header .mat-step-icon-state-done, .mat-step-header .mat-step-icon-state-edit {
+  background-color: #20C165!important;
+}
+//
+////input outline color
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+  color: #20C165!important;
+  // opacity: 1!important;
+}
+//
+////mat-input focused color
+::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+  color: #20C165!important;
+}
+//
+//// mat-input error outline color
+//::ng-deep .mat-form-field-appearance-outline.mat-form-field-invalid.mat-form-field-invalid .mat-form-field-outline-thick{
+//  color: #20C165!important;
+//  opacity: 0.8!important;
+//}
+//
+//// mat-input carent color
+::ng-deep .mat-input-element {
+  caret-color: #20C165!important;
+}
+//
+//// mat-input error carent color
+//::ng-deep .mat-form-field-invalid .mat-input-element, .mat-warn .mat-input-element {
+//  caret-color: #20C165!important;
+//}
+//
+//// mat-label normal state style
+//::ng-deep .mat-form-field-label {
+//  color: white!important;
+//  // color: $mainColor!important;
+//}
+//
+//// mat-label focused style
+::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
+  color: #20C165!important;
+}
+//
+//// mat-label error style
+::ng-deep .mat-form-field.mat-form-field-invalid .mat-form-field-label {
+  color: #20C165!important;
+}
+input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, input:-webkit-autofill:active { -webkit-box-shadow: 0 0 0 30px rgba(0,0,0,.89) inset !important; }
+
+input:-webkit-autofill { -webkit-text-fill-color: #20C165 !important; }
+
+
+.mat-form-field-appearance-fill .mat-form-field-underline::before{
+  background: #20C165;
+}
+
+::ng-deep .mat-form-field.mat-focused .mat-form-field-ripple{
+  background-color: #20C165 !important;
+}
+.mat-input-element{
+  color: rgba(255,255,255,.8);
+}
+.mat-input-element:focus{
+  color: #20C165;
+}
+button{
+  background: none;
+  color: white;
+  border: none;
+
+}
+.form__container{
+  display: flex;
+  flex-direction: column;
+  min-height: 350px;
+  justify-content: space-between;
+  max-width: 300px;
+  margin: 0 auto;
+  color: #F6F6F6;
+  padding-top: 80px;
+  h1{
+    text-align: center;
+  }
+}
+.btn__form{
+  background: #424242;
+}
+.auth_google{
+  background: #424242;
+  padding: 0 10px 0 0;
+  display: flex;
+  &__img{
+    margin: -2px 45px 0px -2px;
+  }
+}
