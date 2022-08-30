@@ -11,21 +11,12 @@
 .main_products{
   margin-top: 25px;
 }
-.rating_btn{
-  background: none;
-  border: none;
-  margin: 0 0 0 7px;
-  cursor: pointer;
-  padding: 0;
-  display: inline-flex;
-}
-.star_icon{
-  color: #dc3545;
-}
+
 .add_basket{
   color: #dc3545;
   box-shadow: 0px 1px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 3)
 }
-.star_icon-def{
-  color: #424242;
+
+.product{
+  cursor: pointer;
 }

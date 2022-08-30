@@ -16,6 +16,7 @@ import { InfoUserPageComponent } from './shared/components/pages/info-user-page/
 
 import {AuthGuard} from "./shared/services/guards/auth.guard";
 import {GoogleSigninService} from "../share/services/googleService/google-signin.service";
+import { CreateProductComponent } from './shared/components/pages/create-product-page/create-product/create-product.component';
 // import {GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule} from "angularx-social-login";
 
 
@@ -26,6 +27,7 @@ import {GoogleSigninService} from "../share/services/googleService/google-signin
     MainPageComponent,
     RegistrationPageComponent,
     InfoUserPageComponent,
+    CreateProductComponent,
 
   ],
   imports: [
@@ -47,6 +49,7 @@ import {GoogleSigninService} from "../share/services/googleService/google-signin
             {path: '', redirectTo: '/account/user/login', pathMatch: 'full'},
             {path: 'login', component: LoginPageComponent },
             {path: 'registration', component: RegistrationPageComponent },
+            {path: 'create-product', component: CreateProductComponent,canActivate:[AuthGuard] },
             {path: 'info', component: InfoUserPageComponent,canActivate:[AuthGuard] },
           ]
           }
