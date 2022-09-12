@@ -1,0 +1,24 @@
+header{
+  background: #303030;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,.5);
+}
+.headerNav__right{
+
+}
+.logo_container{
+  max-width: 50px;
+  max-height: 50px;
+  margin-left: 15px;
+  cursor: pointer;
+  img{
+    max-width: 100%;
+    height: auto;
+  }
+}
+.matListCustom{
+  display: inline-flex;
+  padding: 0;
+}

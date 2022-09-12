@@ -1,0 +1,24 @@
+<aside>
+  <nav class="navigation-menu">
+    <mat-sidenav-container *ngIf="categorise; else loaderShow" class="container-nav">
+      <mat-sidenav-content *ngFor="let category of categorise">
+        <a (click)="showProductByCategory(category.id)" href="javascript:void(0);">
+        <img src="{{environments+ category.icon}}">
+        <p>{{category.name}}
+        <mat-icon style="color: #303030;margin-right: -8px">arrow_back_ios</mat-icon>
+        </p>
+        </a>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+    <ng-template style="position: relative" #loaderShow>
+      <div style="position: relative">
+        <!-- the position of the parent container must be set to relative -->
+        <!-- It is really important to set loaderId for non-master loader -->
+        <ngx-ui-loader [loaderId]="'loader-01'"></ngx-ui-loader>
+      </div>
+    </ng-template>
+
+
+
+  </nav>
+</aside>

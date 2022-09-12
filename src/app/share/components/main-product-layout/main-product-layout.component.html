@@ -1,0 +1,43 @@
+<div class="main_products">
+  <div class="container">
+    <div *ngIf="products" class="row">
+      <div style="margin-bottom: 20px" *ngFor="let product of products.product" class="col-md-4">
+        <mat-card class="product">
+          <mat-card-header class="d-flex justify-content-center a">
+            <mat-card-title>{{product.title}}</mat-card-title>
+          </mat-card-header>
+
+          <img *ngIf="product.iamges.length !== 0" mat-card-image src="{{environments+ product.iamges[0]}}">
+          <mat-card-content>
+            <p>
+            {{product.description}}
+            </p>
+            <p><b>Price</b>: {{product.price}}$</p>
+          </mat-card-content>
+          <mat-card-actions class="d-flex justify-content-between" style="align-items: center">
+            <div  class="rating d-flex">
+            <button class="rating_btn" *ngFor="let rate of counterRate(product.rating);let i = index">
+              <mat-icon  (click)="saveRating(i+1,product.id,product)"  class="star_icon" >star_rate</mat-icon>
+            </button>
+              <div *ngIf="isAuth">
+              <button class="rating_btn" *ngFor="let rate of counterRateDef(product.rating);let i = index">
+                <mat-icon (click)="saveRating((product.rating===0?1:product.rating)+i+1,product.id,product)"  class="star_icon star_icon-def" >star_rate</mat-icon>
+              </button>
+              </div>
+            </div>
+            <button class="add_basket" mat-button>
+              <mat-icon>shopping_basket</mat-icon>
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+
+      <mat-paginator  [length]="length"
+                     [pageSize]="pageSize"
+                     [pageSizeOptions]="pageSizeOptions"
+                     (page)="confirmPageChange($event)"
+                     aria-label="Select page">
+      </mat-paginator>
+    </div>
+  </div>
+</div>
