@@ -1,6 +1,6 @@
 <header style="min-height: 5vh">
   <div class="logo_container">
-    <img routerLink="./" src="assets/logo/white.svg" alt="">
+    <img (click)="resetCategory()" routerLink="./" src="assets/logo/white.svg" alt="">
   </div>
   <div class="headerNav__right">
     <div *ngIf="!isAuth">
@@ -19,6 +19,10 @@
     </div>
 
     <mat-list *ngIf="isAuth" class="matListCustom">
+
+      <mat-list-item>
+        <a routerLink="/account/user/create-product" mat-raised-button href="javascript:void(0);">Create Product</a>
+      </mat-list-item>
       <mat-list-item (click)="logout()">
         <a mat-raised-button href="javascript:void(0);">Logout</a>
       </mat-list-item>

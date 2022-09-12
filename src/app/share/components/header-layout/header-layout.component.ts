@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {MatSidenav} from "@angular/material/sidenav";
 import {AuthService} from "../../../admin/shared/services/authService/auth.service";
 import {Router} from "@angular/router";
+import {ProductServiceService} from "../../services/productService/product-service.service";
+import {NgxUiLoaderService} from "ngx-ui-loader";
 @Component({
   selector: 'app-header-layout',
   templateUrl: './header-layout.component.html',
@@ -11,7 +13,9 @@ export class HeaderLayoutComponent implements OnInit {
   isAuth:boolean = false;
   constructor(
     private auth:AuthService,
-    private route:Router
+    private route:Router,
+    private prodService: ProductServiceService,
+    private ngxService: NgxUiLoaderService
   ) { }
 
   ngOnInit(): void {
@@ -31,5 +35,10 @@ export class HeaderLayoutComponent implements OnInit {
       console.log(res)
       this.route.navigate(['account','user','login'])
     })
+  }
+
+  resetCategory() {
+    this.ngxService.start()
+    this.prodService.productByCategory(0)
   }
 }

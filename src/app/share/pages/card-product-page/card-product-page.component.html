@@ -1,1 +1,140 @@
-<p>card-product-page works!</p>
+<div style="min-height: 800px" class="container mt-5 mb-5">
+  <div *ngIf="product" class="row">
+    <div class="col-md-6">
+      <div class="container-swiper">
+        <div *ngIf="product.iamges;then slider else notImg"></div>
+        <ng-template #slider>
+          <swiper
+            style="--swiper-navigation-color: #fff;--swiper-pagination-color: #fff"
+            [spaceBetween]="1"
+            [navigation]="false"
+            [centeredSlides]="true"
+            [thumbs]="{ swiper: thumbsSwiper }"
+            class="mySwiper2"
+          >
+            <ng-template *ngFor="let test of product.iamges" swiperSlide>
+              <img style="max-width: 100%;margin: 0 auto" [src]="evnUrl+test"/>
+            </ng-template>
+
+          </swiper>
+          <swiper *ngIf="product.iamges.length>1 "
+                  (swiper)="thumbsSwiper = $event"
+                  [spaceBetween]="10"
+                  [slidesPerView]="4"
+                  [slidesOffsetAfter]="2"
+                  [freeMode]="true"
+                  [watchSlidesProgress]="true"
+                  class="mySwiper"
+          >
+
+            <ng-template swiperSlide *ngFor="let img of product.iamges">
+              <img style="max-width: 100%" [src]="evnUrl+img"/>
+            </ng-template>
+
+          </swiper>
+        </ng-template>
+        <ng-template #notImg>
+          <img src="assets/images/stub_card.jpg" alt="">
+        </ng-template>
+      </div>
+      <div class="nav_container">
+        <ul #nav_ul (click)="activeNav($event)" class="nav_ul">
+          <li #activeLine [style.display]="getControlsOnStyleDisplay()" class="active_nav"></li>
+          <li id="comments">Коментарии</li>
+          <li id="description">Описание</li>
+        </ul>
+      </div>
+      <div  #coomentScroll class="nav_main-desc-com">
+        <div *ngIf="showNav ==='comments'" class="commemts-container">
+          <ul class="comments_user-ul">
+            <li #liComments *ngFor="let comment of product.comments">
+              <p>{{comment.user}}</p>
+              <p>{{comment.comment}}</p>
+            </li>
+          </ul>
+        </div>
+        <div *ngIf="showNav ==='description'" class="description_product_container">
+          <ul class="description_product_ul">
+            <li *ngFor="let description of characteristics">
+              <p><b>{{description.characteristic|titlecase }} : </b></p>
+              <p>{{description.property}}</p>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+      <div class="add-comments">
+        <app-add-commentes-layout (comment)="addComment($event)"
+                                  [idProduct]="product.id"></app-add-commentes-layout>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <h1 class="mat-card-title title-product">{{product.title}}</h1>
+      <div class="price_container">
+        <div class="product-prices__big">
+          {{product.price}}<span class="material-icons currency">attach_money</span>
+
+        </div>
+        <button class="add_basket" mat-button>
+          <span>Купить</span>
+          <mat-icon>shopping_basket</mat-icon>
+        </button>
+        <app-rating-layout class="m-lg-3" [product]="product" [productService]="productService"
+                           [rating]="{product_id:product.id,product_rating:product.rating}"></app-rating-layout>
+      </div>
+      <div class="description_container">
+        <div class="description_product">
+          <h3 class="mat-h2">Описание:</h3>
+          <p>{{product.description}}</p>
+        </div>
+      </div>
+      <div class="description_container">
+        <div class="description_product">
+          <h3 class="mat-h2">Регион:</h3>
+          <p>{{product.region.region}}</p>
+        </div>
+      </div>
+      <div class="description_container">
+        <div class="description_product">
+          <h3 class="mat-h2">Категория:</h3>
+          <p>{{product.category.name}}</p>
+        </div>
+      </div>
+      <div class="description_container">
+        <div class="description_product">
+          <h3 class="mat-h2">Издатель:</h3>
+          <ul class="salesman_options">
+            <li>
+              <span>Имя: </span>
+              <span>{{product.salesman.name}}</span>
+            </li>
+            <li>
+              <span>Телефон: </span>
+              <span>{{product.salesman.phone}}</span>
+            </li>
+            <li>
+              <span>Сайт: </span>
+              <span>{{product.salesman.site}}</span>
+            </li>
+            <li>
+              <span>Город: </span>
+              <span>{{product.salesman.city}}</span>
+            </li>
+            <li>
+              <span>Почта: </span>
+              <span>{{product.salesman.email}}</span>
+            </li>
+            <li>
+              <span>Фирма: </span>
+              <span>{{product.salesman.firm}}</span>
+            </li>
+            <li>
+              <span>Создан: </span>
+              <span>{{product.salesman.created_at|date}}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

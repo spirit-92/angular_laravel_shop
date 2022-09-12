@@ -16,6 +16,9 @@ import { InfoUserPageComponent } from './shared/components/pages/info-user-page/
 
 import {AuthGuard} from "./shared/services/guards/auth.guard";
 import {GoogleSigninService} from "../share/services/googleService/google-signin.service";
+import { CreateSalesmanComponent } from './shared/components/pages/create-product-page/create-salesman/create-salesman.component';
+import {MatSelectModule} from "@angular/material/select";
+import { CreateProductComponent } from './shared/components/pages/create-product-page/create-product/create-product.component';
 // import {GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule} from "angularx-social-login";
 
 
@@ -26,6 +29,8 @@ import {GoogleSigninService} from "../share/services/googleService/google-signin
     MainPageComponent,
     RegistrationPageComponent,
     InfoUserPageComponent,
+    CreateSalesmanComponent,
+    CreateProductComponent,
 
   ],
   imports: [
@@ -40,19 +45,22 @@ import {GoogleSigninService} from "../share/services/googleService/google-signin
     ReactiveFormsModule,
     RouterModule.forChild([
       {
-        path:'',component:AdminLayoutComponent , children:[
+        path: '', component: AdminLayoutComponent, children: [
           {path: '', redirectTo: '/account/user/login', pathMatch: 'full'},
-          {path:'user',component:MainPageComponent,
-          children:[
-            {path: '', redirectTo: '/account/user/login', pathMatch: 'full'},
-            {path: 'login', component: LoginPageComponent },
-            {path: 'registration', component: RegistrationPageComponent },
-            {path: 'info', component: InfoUserPageComponent,canActivate:[AuthGuard] },
-          ]
+          {
+            path: 'user', component: MainPageComponent,
+            children: [
+              {path: '', redirectTo: '/account/user/login', pathMatch: 'full'},
+              {path: 'login', component: LoginPageComponent},
+              {path: 'registration', component: RegistrationPageComponent},
+              {path: 'create-product', component: CreateSalesmanComponent, canActivate: [AuthGuard]},
+              {path: 'info', component: InfoUserPageComponent, canActivate: [AuthGuard]},
+            ]
           }
         ]
       }
-    ])
+    ]),
+    MatSelectModule
   ],
   providers: [AuthGuard],
 })

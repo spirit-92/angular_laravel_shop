@@ -1,0 +1,186 @@
+<form [formGroup]="form" (ngSubmit)="submit()" class="form-created-product">
+
+  <!-- title-->
+  <div class="container-title container-product__field">
+    <h4 class="mat-form-field-wrapper">Title</h4>
+    <mat-form-field appearance="fill">
+      <mat-label>Enter your title</mat-label>
+      <input (focusout)="checkExistTitle()" matInput formControlName="title" placeholder="title product" required>
+      <mat-error *ngIf="this.form.controls['title'].status ==='INVALID'">{{getErrorMessageTitle()}}</mat-error>
+    </mat-form-field>
+  </div>
+  <!-- *title-->
+
+  <!--description-->
+  <div class="container-description container-product__field">
+    <h4 class="mat-form-field-wrapper">Description</h4>
+    <mat-form-field appearance="fill">
+      <mat-label>Description</mat-label>
+      <textarea formControlName="description" matInput placeholder="description"></textarea>
+    </mat-form-field>
+  </div>
+  <!--*description-->
+
+  <!--  price-->
+  <div class="container-price container-product__field">
+    <h4 class="mat-form-field-wrapper">Price</h4>
+    <mat-form-field style="max-width: 201px;" appearance="fill" floatLabel="always">
+      <mat-label>Price</mat-label>
+      <input (focusout)="checkExistPrice()" step="0.01" matInput type="number" formControlName="price"
+             class="example-right-align" placeholder="0">
+      <span style="color: rgba(255,255,255,.7)" matPrefix>$&nbsp;</span>
+      <!--      <span matSuffix>.00</span>-->
+      <mat-error *ngIf="this.form.controls['price'].status ==='INVALID'">{{getErrorMessagePrice()}}</mat-error>
+    </mat-form-field>
+  </div>
+  <!--  *price-->
+
+  <!--  category-->
+  <div *ngIf="categories" class="container-category container-product__field">
+    <h4 class="mat-form-field-wrapper">Category</h4>
+    <mat-form-field appearance="fill">
+      <mat-label>Category</mat-label>
+      <mat-select formControlName="category">
+        <mat-option *ngFor="let categori of categories" [value]="categori.id">{{categori.name }}</mat-option>
+
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <!--  *category-->
+
+  <!--  city field-->
+  <div class="container-city container-product__field">
+    <h4 class="mat-form-field-wrapper">City</h4>
+    <mat-form-field appearance="fill">
+      <mat-label>City</mat-label>
+      <mat-select formControlName="city">
+
+        <mat-option *ngFor="let city  of regions" [value]="city.id">{{city.region}}</mat-option>
+
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <!--  *city field-->
+
+  <!--  add img-->
+  <div class="container-img container-product__field">
+    <h4 class="wrapper-uploadFile">Images</h4>
+    <div class="container__upload">
+      <span class="mb-2">height:300px, max-width:400, min-width=350, format: jpeg,png,jpg</span>
+      <div class="input-file">
+        <input  (change)="onFileChange($event,1)" class="input-hide" id="input-file-1"  accept=".png, .jpg, .jpeg" type="file"/>
+        <label for="input-file-1" class="label-upload"> </label>
+        <mat-form-field style="position: relative" appearance="legacy">
+          <mat-label>upload 1 file</mat-label>
+          <input  formControlName="name_1" matInput  placeholder="Placeholder">
+          <mat-icon style="color:white;" matSuffix>upload_file</mat-icon>
+        </mat-form-field>
+        <mat-error class="error_my"
+          *ngIf="errorImages[0].status">
+          <ul class="ul_error">
+            <li *ngFor="let error of getErrorMessageImageInvalid(1)">
+              {{error}}
+            </li>
+          </ul>
+        </mat-error>
+
+      </div>
+      <div class="input-file">
+        <input (change)="onFileChange($event,2)" class="input-hide" id="input-file-2"  accept=".png, .jpg, .jpeg" type="file"/>
+        <label for="input-file-2" class="label-upload"> </label>
+        <mat-form-field appearance="legacy">
+          <mat-label>upload 2 file</mat-label>
+          <input formControlName="name_2" matInput placeholder="Placeholder">
+          <mat-icon style="color:white;" matSuffix>upload_file</mat-icon>
+        </mat-form-field>
+        <mat-error class="error_my"
+                   *ngIf="errorImages[1].status">
+          <ul class="ul_error">
+            <li *ngFor="let error of getErrorMessageImageInvalid(2)">
+              {{error}}
+            </li>
+          </ul>
+        </mat-error>
+      </div>
+      <div class="input-file">
+        <input (change)="onFileChange($event,3)"  class="input-hide" id="input-file-3" accept=".png, .jpg, .jpeg" multiple type="file"/>
+        <label for="input-file-3" class="label-upload"> </label>
+        <mat-form-field appearance="legacy">
+          <mat-label>upload 3 file</mat-label>
+          <input formControlName="name_3"  matInput placeholder="Placeholder">
+          <mat-icon style="color:white;" matSuffix>upload_file</mat-icon>
+        </mat-form-field>
+        <mat-error class="error_my"
+                   *ngIf="errorImages[2].status">
+          <ul class="ul_error">
+            <li *ngFor="let error of getErrorMessageImageInvalid(3)">
+              {{error}}
+            </li>
+          </ul>
+        </mat-error>
+      </div>
+      <div class="input-file">
+        <input (change)="onFileChange($event,4)"  class="input-hide" id="input-file-4" accept=".png, .jpg, .jpeg" multiple type="file"/>
+        <label for="input-file-4" class="label-upload"> </label>
+        <mat-form-field appearance="legacy">
+          <mat-label>upload 4 file</mat-label>
+          <input formControlName="name_4"  matInput placeholder="Placeholder">
+          <mat-icon style="color:white;" matSuffix>upload_file</mat-icon>
+        </mat-form-field>
+        <mat-error class="error_my"
+                   *ngIf="errorImages[3].status">
+          <ul class="ul_error">
+            <li *ngFor="let error of getErrorMessageImageInvalid(4)">
+              {{error}}
+            </li>
+          </ul>
+        </mat-error>
+      </div>
+
+    </div>
+  </div>
+  <!-- * add img-->
+
+  <!--  add features-->
+
+  <div class="container-features container-product__field flex-column">
+    <form [formGroup]="formFeatures" class="form-created-product">
+      <h4 class="mat-form-field-wrapper justify-content-center">Features</h4>
+      <div *ngFor="let control of countControlsFeatures;let idx = index">
+        <div class="d-flex justify-content-between pb-3">
+          <mat-form-field style="width: 25%" appearance="fill">
+            <mat-label>Name</mat-label>
+            <input (focusout)="checkUnicName()" [formControlName]="'featuresName-'+(control.id)" matInput
+                   placeholder="name" required>
+            <mat-error
+              *ngIf="this.formFeatures.get('featuresName-'+(control.id))?.status ==='INVALID'">{{getErrorMessageInvalid(control.id)}}
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field style="width: 60%;" appearance="fill">
+            <mat-label>Features</mat-label>
+            <input [formControlName]="'features-'+(control.id)" matInput placeholder="features" required>
+          </mat-form-field>
+        </div>
+        <button (click)="deleteFeatures(control.id)" style="width: 100%" type="button" class=" container-product mb-4"
+                mat-flat-button color="warn">
+          Delete
+        </button>
+      </div>
+      <button [disabled]="formFeatures.invalid" (click)="addFeatures()" style="width: 100%;" type="button"
+              class="btn__form container-product mt-3" mat-flat-button>
+        add new features
+      </button>
+    </form>
+  </div>
+
+  <!--  *add features-->
+
+  <!--     * created product-->
+  <button [disabled]="form.invalid || formFeatures.invalid" type="submit" class="btn__form container-product mt-3"
+          mat-flat-button>Create
+    Product
+  </button>
+
+
+</form>
+

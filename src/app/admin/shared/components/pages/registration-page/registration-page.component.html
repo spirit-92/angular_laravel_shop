@@ -7,7 +7,7 @@
         <mat-form-field hintLabel="Max 10 characters" appearance="fill">
           <mat-label>Name</mat-label>
           <input formControlName="userName" matInput #input maxlength="10" placeholder="Name user">
-          <mat-hint align="end">{{input.value?.length || 0}}/10</mat-hint>
+          <mat-hint align="end">{{input.value.length || 0}}/10</mat-hint>
           <mat-error *ngIf="this.form.controls['userName'].status ==='INVALID'">{{getErrorMessageUserName()}}</mat-error>
         </mat-form-field>
 

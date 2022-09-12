@@ -1,11 +1,12 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {ProductServiceService} from "../../services/productService/product-service.service";
-import {Product} from "../../services/interfaces/Product";
+import {Product, Products} from "../../services/interfaces/Product";
 import {environment} from "../../../../environments/environment";
 import {PageEvent} from "@angular/material/paginator";
 import {AuthService} from "../../../admin/shared/services/authService/auth.service";
 import {tap} from "rxjs";
 import {NgxUiLoaderService} from "ngx-ui-loader";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-main-product-layout',
@@ -14,7 +15,7 @@ import {NgxUiLoaderService} from "ngx-ui-loader";
 })
 export class MainProductLayoutComponent implements OnInit {
 
-  public products: Product
+  public products: Products
   environments: string;
   length = 100;
   pageSize = 9;
@@ -23,17 +24,18 @@ export class MainProductLayoutComponent implements OnInit {
   category_id = 0
 
   constructor(
-    private productService: ProductServiceService,
-    private auth: AuthService,
-    private ngxService: NgxUiLoaderService
+    public productService: ProductServiceService,
+
+    private ngxService: NgxUiLoaderService,
+    private route: Router
   ) {
   }
 
   ngOnInit(): void {
     this.ngxService.start()
     this.productService.getAllProduct().pipe(tap(() => {
-      this.isAuth = this.auth.isAuthenticated()
-    })).subscribe((res: Product) => {
+
+    })).subscribe((res: Products) => {
       this.length = res.total
       this.products = res
       this.pageSize = res.product.length
@@ -48,7 +50,7 @@ export class MainProductLayoutComponent implements OnInit {
     this.productService.showProductByCategory.subscribe((category_id: number) => {
       this.category_id = category_id
 
-      this.productService.getAllProduct(1, 9, this.category_id).subscribe((prod: Product) => {
+      this.productService.getAllProduct(1, 9, this.category_id).subscribe((prod: Products) => {
         this.length = prod.total
         this.products = prod
         this.pageSize = prod.product.length
@@ -62,18 +64,9 @@ export class MainProductLayoutComponent implements OnInit {
     })
 
   }
-
-  counterRate(i: number) {
-    return new Array(Math.round(i == 0 ? 1 : i));
-  }
-
-  counterRateDef(rating: number) {
-    return new Array(Math.round(5 - rating === 5 ? 4 : 5 - rating));
-  }
-
   confirmPageChange($event: PageEvent) {
 
-    this.productService.getAllProduct($event.pageIndex + 1, $event.pageSize, this.category_id).subscribe((res: Product) => {
+    this.productService.getAllProduct($event.pageIndex + 1, $event.pageSize, this.category_id).subscribe((res: Products) => {
       this.length = res.total
       this.products = res
       this.pageSize = res.product.length
@@ -83,13 +76,9 @@ export class MainProductLayoutComponent implements OnInit {
   }
 
 
-  saveRating(number: number, idProduct: number, product: any) {
-    if (this.isAuth) {
-      let rating = Math.round(number)
-      this.productService.saveProductRating(rating, idProduct).subscribe(res => {
-        product.rating = res.averageRating
-      })
+  navigateCardProduct($event: MouseEvent, idCard: number) {
+    if (!($event.target as Element).classList.contains('rating_icon')) {
+      this.route.navigate(['product-card/', idCard])
     }
   }
-
 }

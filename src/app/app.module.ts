@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MainLayoutComponent } from './share/components/main-layout/main-layout.component';
 import { MainPageComponent } from './share/pages/main-page/main-page.component';
+import {RatingLayoutComponent} from "./share/components/rating-layout/rating-layout.component";
 import { HeaderLayoutComponent } from './share/components/header-layout/header-layout.component';
 import { FooterLayoutComponent } from './share/components/footer-layout/footer-layout.component';
 import { AdminLayoutComponent } from './admin/shared/components/admin-layout/admin-layout.component';
@@ -18,6 +19,7 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatIconModule} from "@angular/material/icon";
 import { NavbarLayoutComponent } from './share/components/navbar-layout/navbar-layout.component';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+
 import {
   NgxUiLoaderModule,
   NgxUiLoaderConfig,
@@ -26,12 +28,22 @@ import {
   PB_DIRECTION,
   NgxUiLoaderHttpModule
 } from "ngx-ui-loader";
+
 import { MainProductLayoutComponent } from './share/components/main-product-layout/main-product-layout.component';
 import {MatCardModule} from "@angular/material/card";
 import {MatPaginatorModule} from "@angular/material/paginator";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
 import { CardProductPageComponent } from './share/pages/card-product-page/card-product-page.component';
+import { SwiperModule } from 'swiper/angular';
+import { AddCommentesLayoutComponent } from './share/components/add-commentes-layout/add-commentes-layout.component';
+
+
+
+
+
+
+
 const INTERCEPTOR_PROVIDER:Provider = {
   provide:HTTP_INTERCEPTORS ,
   multi:true,
@@ -64,24 +76,31 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     NavbarLayoutComponent,
     MainProductLayoutComponent,
     CardProductPageComponent,
+    RatingLayoutComponent,
+    AddCommentesLayoutComponent,
+
+
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    AdminModule,
-    BrowserAnimationsModule,
-    MatButtonModule,
-    MatListModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatProgressSpinnerModule,
-    NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
-    NgxUiLoaderHttpModule,
-    MatCardModule,
-    MatPaginatorModule,
-    FormsModule,
-    MatInputModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        AdminModule,
+        BrowserAnimationsModule,
+        MatButtonModule,
+        MatListModule,
+        MatSidenavModule,
+        MatIconModule,
+        MatProgressSpinnerModule,
+        NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
+        NgxUiLoaderHttpModule,
+        MatCardModule,
+        MatPaginatorModule,
+        FormsModule,
+        MatInputModule,
+        SwiperModule,
+        ReactiveFormsModule,
+
+    ],
   providers: [INTERCEPTOR_PROVIDER],
   bootstrap: [AppComponent]
 })
