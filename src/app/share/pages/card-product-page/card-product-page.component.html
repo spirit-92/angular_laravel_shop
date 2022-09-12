@@ -1,41 +1,37 @@
-<div class="container mt-5">
+<div style="min-height: 800px" class="container mt-5 mb-5">
   <div *ngIf="product" class="row">
     <div class="col-md-6">
-
-
-
-
       <div class="container-swiper">
         <div *ngIf="product.iamges;then slider else notImg"></div>
-        <ng-template #slider >
-        <swiper
-          style="--swiper-navigation-color: #fff;--swiper-pagination-color: #fff"
-          [spaceBetween]="1"
-          [navigation]="false"
-          [centeredSlides]="true"
-          [thumbs]="{ swiper: thumbsSwiper }"
-          class="mySwiper2"
-        >
-          <ng-template *ngFor="let test of product.iamges" swiperSlide>
-            <img style="max-width: 100%;margin: 0 auto" [src]="evnUrl+test"/>
-          </ng-template>
+        <ng-template #slider>
+          <swiper
+            style="--swiper-navigation-color: #fff;--swiper-pagination-color: #fff"
+            [spaceBetween]="1"
+            [navigation]="false"
+            [centeredSlides]="true"
+            [thumbs]="{ swiper: thumbsSwiper }"
+            class="mySwiper2"
+          >
+            <ng-template *ngFor="let test of product.iamges" swiperSlide>
+              <img style="max-width: 100%;margin: 0 auto" [src]="evnUrl+test"/>
+            </ng-template>
 
-        </swiper>
-        <swiper *ngIf="product.iamges.length>1 "
-                (swiper)="thumbsSwiper = $event"
-                [spaceBetween]="10"
-                [slidesPerView]="4"
-                [slidesOffsetAfter]="2"
-                [freeMode]="true"
-                [watchSlidesProgress]="true"
-                class="mySwiper"
-        >
+          </swiper>
+          <swiper *ngIf="product.iamges.length>1 "
+                  (swiper)="thumbsSwiper = $event"
+                  [spaceBetween]="10"
+                  [slidesPerView]="4"
+                  [slidesOffsetAfter]="2"
+                  [freeMode]="true"
+                  [watchSlidesProgress]="true"
+                  class="mySwiper"
+          >
 
-          <ng-template swiperSlide *ngFor="let img of product.iamges">
-            <img style="max-width: 100%" [src]="evnUrl+img"/>
-          </ng-template>
+            <ng-template swiperSlide *ngFor="let img of product.iamges">
+              <img style="max-width: 100%" [src]="evnUrl+img"/>
+            </ng-template>
 
-        </swiper>
+          </swiper>
         </ng-template>
         <ng-template #notImg>
           <img src="assets/images/stub_card.jpg" alt="">
@@ -45,30 +41,32 @@
         <ul #nav_ul (click)="activeNav($event)" class="nav_ul">
           <li #activeLine [style.display]="getControlsOnStyleDisplay()" class="active_nav"></li>
           <li id="comments">Коментарии</li>
-          <li id="description" >Описание</li>
+          <li id="description">Описание</li>
         </ul>
       </div>
+      <div  #coomentScroll class="nav_main-desc-com">
+        <div *ngIf="showNav ==='comments'" class="commemts-container">
+          <ul class="comments_user-ul">
+            <li #liComments *ngFor="let comment of product.comments">
+              <p>{{comment.user}}</p>
+              <p>{{comment.comment}}</p>
+            </li>
+          </ul>
+        </div>
+        <div *ngIf="showNav ==='description'" class="description_product_container">
+          <ul class="description_product_ul">
+            <li *ngFor="let description of characteristics">
+              <p><b>{{description.characteristic|titlecase }} : </b></p>
+              <p>{{description.property}}</p>
+            </li>
 
-      <div *ngIf="showNav ==='comments'" class="comments_container">
-        <ul class="comments_user-ul">
-          <li *ngFor="let comment of product.comments">
-            <p>{{comment.user}}</p>
-            <p>{{comment.comment}}</p>
-          </li>
-        </ul>
+          </ul>
+        </div>
       </div>
-
-
-      <div *ngIf="showNav ==='description'" class="description_product_container">
-        <ul class="description_product_ul">
-          <li *ngFor="let description of characteristics">
-            <p><b>{{description.characteristic|titlecase }} : </b></p>
-            <p>{{description.property}}</p>
-          </li>
-
-        </ul>
+      <div class="add-comments">
+        <app-add-commentes-layout (comment)="addComment($event)"
+                                  [idProduct]="product.id"></app-add-commentes-layout>
       </div>
-
     </div>
     <div class="col-md-6">
       <h1 class="mat-card-title title-product">{{product.title}}</h1>

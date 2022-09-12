@@ -32,10 +32,12 @@ import {
 import { MainProductLayoutComponent } from './share/components/main-product-layout/main-product-layout.component';
 import {MatCardModule} from "@angular/material/card";
 import {MatPaginatorModule} from "@angular/material/paginator";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
 import { CardProductPageComponent } from './share/pages/card-product-page/card-product-page.component';
 import { SwiperModule } from 'swiper/angular';
+import { AddCommentesLayoutComponent } from './share/components/add-commentes-layout/add-commentes-layout.component';
+
 
 
 
@@ -74,7 +76,9 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     NavbarLayoutComponent,
     MainProductLayoutComponent,
     CardProductPageComponent,
-    RatingLayoutComponent
+    RatingLayoutComponent,
+    AddCommentesLayoutComponent,
+
 
   ],
     imports: [
@@ -94,6 +98,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
         FormsModule,
         MatInputModule,
         SwiperModule,
+        ReactiveFormsModule,
 
     ],
   providers: [INTERCEPTOR_PROVIDER],

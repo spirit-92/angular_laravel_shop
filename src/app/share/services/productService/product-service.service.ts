@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable, Subject} from "rxjs";
 import {Product, Products} from "../interfaces/Product";
 import {environment} from "../../../../environments/environment";
+import {CommentsInterfaceGet, CommentsInterfaceSave} from "../interfaces/Comments-interface";
 
 
 @Injectable({
@@ -34,5 +35,8 @@ export class ProductServiceService {
 
   public getProduct(productId:number):Observable<Product>{
     return this.http.get<Product>(`${environment.url}product/${productId}`)
+  }
+  public addComment(comment:CommentsInterfaceSave):Observable<CommentsInterfaceGet>{
+    return this.http.post<CommentsInterfaceGet>(`${environment.url}admin_product_comments`,comment)
   }
 }

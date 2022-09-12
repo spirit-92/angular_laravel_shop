@@ -88,7 +88,6 @@ input:-webkit-autofill { -webkit-text-fill-color: #20C165 !important; }
   justify-content: space-between;
   margin: 0 auto;
   width: 450px;
-  margin-bottom: 20px;
   h4{
     margin: 0;
     color: white;
@@ -107,58 +106,6 @@ input:-webkit-autofill { -webkit-text-fill-color: #20C165 !important; }
 }
 .btn__form{
   background: #424242;
-  width: 450px;
+  width: 350px;
   margin: 0 auto;
-}
-.example-container .mat-form-field + .mat-form-field {
-  margin-left: 8px;
-}
-
-.example-right-align {
-  text-align: right;
-}
-
-input.example-right-align::-webkit-outer-spin-button,
-input.example-right-align::-webkit-inner-spin-button {
-  display: none;
-}
-
-input.example-right-align {
-  -moz-appearance: textfield;
-}
-.input-hide{
-  height: 0;
-  width: 0;
-  visibility: hidden;
-  overflow: hidden;
-}
-.container__upload{
-  display: flex;
-  position: relative;
-  flex-direction: column;
-  max-width: 201px;
-  color: white;
-}
-.label-upload{
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
-  z-index: 1;
-}
-.wrapper-uploadFile{
-  align-items:center !important;
-}
-.error_my{
-  max-width: 201px;
-  font-size: 12px;
-  margin-top: -15px;
-}
-.input-file{
-  position: relative;
-  margin-bottom: 10px;
-}
-.ul_error{
-  margin: 0;
-  padding: 0;
 }

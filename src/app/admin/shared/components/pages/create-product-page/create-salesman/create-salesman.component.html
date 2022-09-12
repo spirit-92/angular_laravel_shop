@@ -1,0 +1,99 @@
+<div class="createProduct-wrap">
+  <div class="container border-product">
+    <h1 class="h1-cProduct">{{checkChangeSalesman?'Create Salesman':'Create Product'}}</h1>
+    <form #formElement [formGroup]="form" (ngSubmit)="submit()" class="form-created-product">
+      <!--      created salesman-->
+      <!--      salesman-->
+
+      <div class="container-salesman container-product__field">
+        <h4 class="mat-form-field-wrapper">Salesman</h4>
+        <mat-form-field appearance="fill">
+          <mat-label>Salesman</mat-label>
+          <mat-select  (selectionChange)="changeSalesman($event)" formControlName="salesman">
+            <mat-option [value]="0">None</mat-option>
+            <mat-option  *ngFor="let salesman of savedSalesman" [value]="salesman.id">{{salesman.name }} ({{salesman.email}})</mat-option>
+
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <!--     * salesman-->
+      <!--  city field-->
+      <div *ngIf="checkChangeSalesman;then newSalesman else salesman">here is ignored</div>
+      <ng-template #newSalesman>
+      <div class="container-city container-product__field">
+        <h4 class="mat-form-field-wrapper">City</h4>
+        <mat-form-field appearance="fill">
+          <mat-label>City</mat-label>
+          <mat-select formControlName="city">
+
+            <mat-option *ngFor="let city  of regions" [value]="city.id">{{city.region}}</mat-option>
+
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <!--  *city field-->
+      <!-- email-->
+      <div class="container-email container-product__field">
+        <h4 class="mat-form-field-wrapper">Email</h4>
+        <mat-form-field appearance="fill">
+          <mat-label>Enter your email</mat-label>
+          <input (focusout)="checkExistEmail()" matInput formControlName="email" placeholder="pat@example.com" required>
+          <mat-error *ngIf="this.form.controls['email'].status ==='INVALID'">{{getErrorMessageSalesmanEmail()}}</mat-error>
+        </mat-form-field>
+      </div>
+      <!-- *email-->
+      <!-- site-->
+      <div class="container-site container-product__field">
+        <h4 class="mat-form-field-wrapper">Site</h4>
+        <mat-form-field appearance="fill">
+          <mat-label>Site</mat-label>
+          <input (focusout)="checkSite()" type="url" formControlName="site" matInput placeholder="Site">
+          <mat-error *ngIf="this.form.controls['site'].status ==='INVALID'">{{getErrorMessageSalesmanSite()}}</mat-error>
+        </mat-form-field>
+      </div>
+      <!-- *site-->
+      <!--firma-->
+      <div class="container-firm container-product__field">
+        <h4 class="mat-form-field-wrapper">Firm</h4>
+        <mat-form-field appearance="fill">
+          <mat-label>Firm</mat-label>
+          <input formControlName="firm" matInput placeholder="Firm">
+        </mat-form-field>
+      </div>
+      <!-- *firma-->
+      <!--name-->
+      <div class="container-name container-product__field">
+        <h4 class="mat-form-field-wrapper">Name</h4>
+        <mat-form-field appearance="fill">
+          <mat-label>Name</mat-label>
+          <input formControlName="name" matInput placeholder="Name">
+        </mat-form-field>
+      </div>
+      <!--*name-->
+      <!--telephone-->
+      <div class="container-phone container-product__field">
+        <h4 class="mat-form-field-wrapper">Phone</h4>
+        <mat-form-field appearance="fill">
+          <mat-label>Phone</mat-label>
+          <input (focusout)="checkPhone()"  formControlName="phone" type="tel" matInput placeholder="Phone">
+          <mat-error *ngIf="this.form.controls['phone'].status ==='INVALID'">{{getErrorMessageSalesmanPhone()}}</mat-error>
+        </mat-form-field>
+      </div>
+      </ng-template>
+      <!--*telephone-->
+      <!--     * created salesman-->
+      <button [disabled]="form.invalid"  #submitBtn *ngIf="checkChangeSalesman"   type="submit" class="btn__form container-product mt-3" mat-flat-button>Save salesman</button>
+
+    </form>
+    <ng-template #salesman>
+      <div class="container-product__field d-block">
+        <h4 class="mat-form-field-wrapper d-block" style="text-align: center">
+          Create Product
+        </h4>
+        <div *ngIf="selectedSalesman">
+        <app-create-product [regions]="regions"  [salesman]="selectedSalesman"></app-create-product>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</div>

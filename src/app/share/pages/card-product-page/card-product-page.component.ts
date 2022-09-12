@@ -3,8 +3,8 @@ import {
   AfterContentInit, AfterViewChecked,
   AfterViewInit,
   Component, ContentChild, ContentChildren, DoCheck,
-  ElementRef, OnDestroy,
-  OnInit, QueryList,
+  ElementRef, OnChanges, OnDestroy,
+  OnInit, QueryList, SimpleChanges,
   ViewChild, ViewChildren
 } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
@@ -13,16 +13,20 @@ import {Product} from "../../services/interfaces/Product";
 import {environment} from "../../../../environments/environment";
 import SwiperCore, {FreeMode, Navigation, Thumbs} from "swiper";
 import {BehaviorSubject, Observable, Subject} from "rxjs";
+import {CommentsInterfaceGet} from "../../services/interfaces/Comments-interface";
 
 SwiperCore.use([FreeMode, Navigation, Thumbs]);
 
+
+class ChildDirective {
+}
 
 @Component({
   selector: 'app-card-product-page',
   templateUrl: './card-product-page.component.html',
   styleUrls: ['./card-product-page.component.scss']
 })
-export class CardProductPageComponent implements OnInit {
+export class CardProductPageComponent implements OnInit{
   productId: number
   product: Product
   thumbsSwiper: any;
@@ -36,7 +40,8 @@ export class CardProductPageComponent implements OnInit {
 
   @ViewChild('nav_ul') ulEl: ElementRef;
   @ViewChild('activeLine') activeLine: ElementRef;
-
+  @ViewChild('coomentScroll') scrollElemen:ElementRef
+  @ViewChildren('liComments') viewChildren!: QueryList<ChildDirective>;
   constructor(
     private router: ActivatedRoute,
     public productService: ProductServiceService
@@ -90,10 +95,21 @@ export class CardProductPageComponent implements OnInit {
     if (this.ulEl && this.checkUlRender) {
       this.showNav = this.ulEl.nativeElement.children[1].id
       this.activeLine.nativeElement.style.width = this.ulEl.nativeElement.children[1].getBoundingClientRect().width + 'px'
-
       this.checkUlRender = false
     }
   }
+
+  addComment(comment: CommentsInterfaceGet) {
+    this.product.comments.push(comment)
+    setTimeout(()=>{
+      this.scrollElemen.nativeElement.scrollTop = this.scrollElemen.nativeElement.scrollHeight
+    },0)
+
+  }
+
+
+
+
 
 
 }
