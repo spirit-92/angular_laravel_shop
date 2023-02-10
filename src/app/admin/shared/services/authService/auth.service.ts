@@ -105,7 +105,7 @@ checkAuth = new BehaviorSubject(this.auth)
     return this.http.post(`${environment.url}`+'logout',{}).pipe(switchMap(() =>{
       this.checkAuth.next(false)
       this.logoutClearStorage()
-      this.signInService.signOut()
+      // this.signInService.signOut()
       return of(true)
     }),catchError(err => {
       this.checkAuth.next(true)

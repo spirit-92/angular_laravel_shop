@@ -1,10 +1,11 @@
-import {ChangeDetectorRef, Component, NgZone, OnInit} from '@angular/core';
+import {Component, NgZone, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {LoginInterface, RegistrationInterface} from "../../../services/interfaces/registrationInterface";
 import {AuthService} from "../../../services/authService/auth.service";
 import {Route, Router} from "@angular/router";
 import {catchError, Observable, throwError} from "rxjs";
-import {GoogleSigninService} from "../../../../../share/services/googleService/google-signin.service";
+import {GoogleLoginProvider, SocialAuthService, SocialUser} from "angularx-social-login";
+// import {GoogleSigninService} from "../../../../../share/services/googleService/google-signin.service";
 
 @Component({
   selector: 'app-login-page',
@@ -23,12 +24,15 @@ export class LoginPageComponent implements OnInit {
     email:'',
     password:'',
   };
-  user: gapi.auth2.GoogleUser;
+  socialUser!: SocialUser;
+  isLoggedin?: boolean;
+  // user: gapi.auth2.GoogleUser;
   constructor(
     private auth:AuthService,
     private route:Router,
-    private signInService: GoogleSigninService,
-    private zone: NgZone
+    // private signInService: GoogleSigninService,
+    private zone: NgZone,
+    private socialAuthService: SocialAuthService
 
   ) {
   }
@@ -44,6 +48,12 @@ export class LoginPageComponent implements OnInit {
     // },error => {
     //   console.log('error')
     // })
+
+    this.socialAuthService.authState.subscribe((user) => {
+      this.socialUser = user;
+      this.isLoggedin = user != null;
+      console.log(this.socialUser,this.isLoggedin);
+    });
 
   }
 
@@ -94,33 +104,36 @@ export class LoginPageComponent implements OnInit {
       email:formData.email,
       password:formData.password
     }
-    this.auth.login(this.login).subscribe(res =>{
-      console.log(res)
-      this.route.navigate(['account','user','info'])
-    })
+    // this.auth.login(this.login).subscribe(res =>{
+    //   console.log(res)
+    //   this.route.navigate(['account','user','info'])
+    // })
   }
   signIn(){
-    this.signInService.signin().subscribe(res =>{
-      res.then((user:gapi.auth2.GoogleUser)=>{
-        this.user = user
-        let register:RegistrationInterface ={
-          name: this.user.getBasicProfile().getName(),
-          email:this.user.getBasicProfile().getEmail(),
-          password: this.user.getId(),
-          password_confirmation:this.user.getId(),
-          auth:'google'
-        }
-        return Promise.resolve(register)
-      }).then((register:RegistrationInterface)=>{
-        this.auth.loginGoogle(register).subscribe(res =>{
-          this.zone.run(() => {
-            this.route.navigate(['account','user','info'])
-          });
-        })
-      })
+    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(res =>{
+      console.log(res)
     })
+    // this.signInService.signin().subscribe(res =>{
+    //   res.then((user:gapi.auth2.GoogleUser)=>{
+    //     this.user = user
+    //     let register:RegistrationInterface ={
+    //       name: this.user.getBasicProfile().getName(),
+    //       email:this.user.getBasicProfile().getEmail(),
+    //       password: this.user.getId(),
+    //       password_confirmation:this.user.getId(),
+    //       auth:'google'
+    //     }
+    //     return Promise.resolve(register)
+    //   }).then((register:RegistrationInterface)=>{
+    //     this.auth.loginGoogle(register).subscribe(res =>{
+    //       this.zone.run(() => {
+    //         this.route.navigate(['account','user','info'])
+    //       });
+    //     })
+    //   })
+    // })
   }
   signOut(){
-    this.signInService.signOut()
+    // this.signInService.signOut()
   }
 }

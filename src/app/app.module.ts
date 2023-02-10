@@ -19,6 +19,11 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatIconModule} from "@angular/material/icon";
 import { NavbarLayoutComponent } from './share/components/navbar-layout/navbar-layout.component';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {
+  SocialLoginModule,
+  SocialAuthServiceConfig,
+} from 'angularx-social-login';
+import { GoogleLoginProvider } from 'angularx-social-login';
 
 import {
   NgxUiLoaderModule,
@@ -26,7 +31,7 @@ import {
   POSITION,
   SPINNER,
   PB_DIRECTION,
-  NgxUiLoaderHttpModule
+  NgxUiLoaderHttpModule,
 } from "ngx-ui-loader";
 
 import { MainProductLayoutComponent } from './share/components/main-product-layout/main-product-layout.component';
@@ -99,9 +104,23 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
         MatInputModule,
         SwiperModule,
         ReactiveFormsModule,
-
+        SocialLoginModule
     ],
-  providers: [INTERCEPTOR_PROVIDER],
+  providers: [
+    INTERCEPTOR_PROVIDER,
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider('276670737870-3qne4subcq0ib8i2cvd1kv6qoen43b8h.apps.googleusercontent.com'),
+          },
+        ],
+      } as SocialAuthServiceConfig,
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
