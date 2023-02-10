@@ -4,7 +4,7 @@ import {LoginInterface, RegistrationInterface} from "../../../services/interface
 import {AuthService} from "../../../services/authService/auth.service";
 import {Route, Router} from "@angular/router";
 import {catchError, Observable, throwError} from "rxjs";
-import {GoogleLoginProvider, SocialAuthService, SocialUser} from "angularx-social-login";
+// import {GoogleLoginProvider, SocialAuthService, SocialUser} from "angularx-social-login";
 // import {GoogleSigninService} from "../../../../../share/services/googleService/google-signin.service";
 
 @Component({
@@ -24,15 +24,15 @@ export class LoginPageComponent implements OnInit {
     email:'',
     password:'',
   };
-  socialUser!: SocialUser;
-  isLoggedin?: boolean;
+  // socialUser!: SocialUser;
+  // isLoggedin?: boolean;
   // user: gapi.auth2.GoogleUser;
   constructor(
     private auth:AuthService,
     private route:Router,
     // private signInService: GoogleSigninService,
     private zone: NgZone,
-    private socialAuthService: SocialAuthService
+    // private socialAuthService: SocialAuthService
 
   ) {
   }
@@ -49,11 +49,11 @@ export class LoginPageComponent implements OnInit {
     //   console.log('error')
     // })
 
-    this.socialAuthService.authState.subscribe((user) => {
-      this.socialUser = user;
-      this.isLoggedin = user != null;
-      console.log(this.socialUser,this.isLoggedin);
-    });
+    // this.socialAuthService.authState.subscribe((user) => {
+    //   this.socialUser = user;
+    //   this.isLoggedin = user != null;
+    //   console.log(this.socialUser,this.isLoggedin);
+    // });
 
   }
 
@@ -110,9 +110,7 @@ export class LoginPageComponent implements OnInit {
     // })
   }
   signIn(){
-    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(res =>{
-      console.log(res)
-    })
+
     // this.signInService.signin().subscribe(res =>{
     //   res.then((user:gapi.auth2.GoogleUser)=>{
     //     this.user = user

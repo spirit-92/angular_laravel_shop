@@ -11,19 +11,18 @@ import { FooterLayoutComponent } from './share/components/footer-layout/footer-l
 import { AdminLayoutComponent } from './admin/shared/components/admin-layout/admin-layout.component';
 import {AdminModule} from "./admin/admin.module";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatButtonModule} from "@angular/material/button";
-import {MatListModule} from "@angular/material/list";
+
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {AuthInterceptor} from "./share/services/interceptor/auth.interceptor";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatIconModule} from "@angular/material/icon";
 import { NavbarLayoutComponent } from './share/components/navbar-layout/navbar-layout.component';
-import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import {
-  SocialLoginModule,
-  SocialAuthServiceConfig,
-} from 'angularx-social-login';
-import { GoogleLoginProvider } from 'angularx-social-login';
+
+// import {
+//   SocialLoginModule,
+//   SocialAuthServiceConfig,
+// } from 'angularx-social-login';
+// import { GoogleLoginProvider } from 'angularx-social-login';
 
 import {
   NgxUiLoaderModule,
@@ -35,13 +34,18 @@ import {
 } from "ngx-ui-loader";
 
 import { MainProductLayoutComponent } from './share/components/main-product-layout/main-product-layout.component';
-import {MatCardModule} from "@angular/material/card";
-import {MatPaginatorModule} from "@angular/material/paginator";
+
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {MatInputModule} from "@angular/material/input";
+
 import { CardProductPageComponent } from './share/pages/card-product-page/card-product-page.component';
 import { SwiperModule } from 'swiper/angular';
 import { AddCommentesLayoutComponent } from './share/components/add-commentes-layout/add-commentes-layout.component';
+import {MatButtonModule} from "@angular/material/button";
+import {MatListModule} from "@angular/material/list";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatCardModule} from "@angular/material/card";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatInputModule} from "@angular/material/input";
 
 
 
@@ -104,22 +108,22 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
         MatInputModule,
         SwiperModule,
         ReactiveFormsModule,
-        SocialLoginModule
+        // SocialLoginModule
     ],
   providers: [
     INTERCEPTOR_PROVIDER,
-    {
-      provide: 'SocialAuthServiceConfig',
-      useValue: {
-        autoLogin: false,
-        providers: [
-          {
-            id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider('276670737870-3qne4subcq0ib8i2cvd1kv6qoen43b8h.apps.googleusercontent.com'),
-          },
-        ],
-      } as SocialAuthServiceConfig,
-    },
+    // {
+    //   provide: 'SocialAuthServiceConfig',
+    //   useValue: {
+    //     autoLogin: false,
+    //     providers: [
+    //       {
+    //         id: GoogleLoginProvider.PROVIDER_ID,
+    //         provider: new GoogleLoginProvider('276670737870-3qne4subcq0ib8i2cvd1kv6qoen43b8h.apps.googleusercontent.com'),
+    //       },
+    //     ],
+    //   } as SocialAuthServiceConfig,
+    // },
   ],
   bootstrap: [AppComponent]
 })
