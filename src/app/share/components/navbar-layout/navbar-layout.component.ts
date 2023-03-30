@@ -5,7 +5,8 @@ import {environment} from "../../../../environments/environment";
 
 import {NgxUiLoaderService} from "ngx-ui-loader";
 import {ProductServiceService} from "../../services/productService/product-service.service";
-import {Product} from "../../services/interfaces/Product";
+import {AuthService} from "../../../admin/shared/services/authService/auth.service";
+
 
 
 @Component({
@@ -21,7 +22,8 @@ export class NavbarLayoutComponent implements OnInit {
   constructor(
     private navService: NavbarServiceService,
     private prodService: ProductServiceService,
-    private ngxService: NgxUiLoaderService
+    private ngxService: NgxUiLoaderService,
+
   ) {
   }
 
@@ -33,6 +35,8 @@ export class NavbarLayoutComponent implements OnInit {
       this.categorise = categories
       this.ngxService.stopLoader("loader-01");
     })
+
+
     this.environments = environment.urlImg
   }
 

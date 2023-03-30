@@ -9,7 +9,8 @@ import {
 
 
 import {catchError, throwError} from "rxjs";
-import {MatLegacySelectChange as MatSelectChange} from "@angular/material/legacy-select";
+import {MatSelectChange} from "@angular/material/select";
+
 
 @Component({
   selector: 'app-create-salesman',

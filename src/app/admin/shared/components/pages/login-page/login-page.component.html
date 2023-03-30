@@ -12,15 +12,21 @@
 <!--    </mat-form-field>-->
 
     <!--    email form-->
-    <mat-form-field appearance="fill">
-      <mat-label>Enter your email</mat-label>
-      <input (focusout)="checkExistEmail()" formControlName="email" matInput placeholder="pat@example.com" required>
-      <mat-error *ngIf="this.form.controls['email'].status ==='INVALID'">{{getErrorMessageUserEmail()}}</mat-error>
-    </mat-form-field>
+<!--    <mat-form-field appearance="fill">-->
+<!--      <mat-label>Enter your email</mat-label>-->
+<!--      <input (focusout)="checkExistEmail()" formControlName="email" matInput placeholder="pat@example.com" required>-->
+<!--      <mat-error *ngIf="this.form.controls['email'].status ==='INVALID'">{{getErrorMessageUserEmail()}}</mat-error>-->
+<!--    </mat-form-field>-->
+
+      <mat-form-field appearance="outline">
+        <mat-label>Enter your email</mat-label>
+        <input  (focusout)="checkExistEmail()" formControlName="email" matInput placeholder="pat@example.com" required>
+        <mat-error *ngIf="this.form.controls['email'].status ==='INVALID'">{{getErrorMessageUserEmail()}}</mat-error>
+      </mat-form-field>
 
     <!--    password form-->
 
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline">
       <mat-label>Enter your password</mat-label>
       <input formControlName="password" matInput [type]="hide ? 'password' : 'text'">
       <mat-error *ngIf="this.form.controls['password'].status ==='INVALID'">{{getErrorMessagePassword()}}</mat-error>
@@ -29,16 +35,20 @@
         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
       </button>
     </mat-form-field>
-      <button  type="button" class="auth_google" (click)="signIn()" mat-flat-button>
-        <img class="auth_google__img" src="assets/logo/btn_google_logo_btn.svg" alt="">
-        <span>Sign in with Google</span>
-      </button>
+
+      <!--    password google sign in-->
+
+      <asl-google-signin-button type="standard"   width="300"  theme="filled_black" locale="en_CN" size="large" logo_alignment="left" text="continue_with"   class="auth_google" >
+
+      </asl-google-signin-button>
+
       <button [disabled]="form.invalid" type="submit" class="btn__form" mat-flat-button>Login</button>
+
+
+
 
     </div>
     </form>
 
   </div>
-
-
 </div>

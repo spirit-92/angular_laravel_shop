@@ -4,8 +4,8 @@ import {LoginInterface, RegistrationInterface} from "../../../services/interface
 import {AuthService} from "../../../services/authService/auth.service";
 import {Route, Router} from "@angular/router";
 import {catchError, Observable, throwError} from "rxjs";
-// import {GoogleLoginProvider, SocialAuthService, SocialUser} from "angularx-social-login";
-// import {GoogleSigninService} from "../../../../../share/services/googleService/google-signin.service";
+import {SocialAuthService, SocialUser} from "@abacritt/angularx-social-login";
+import { GoogleLoginProvider } from "@abacritt/angularx-social-login";
 
 @Component({
   selector: 'app-login-page',
@@ -14,6 +14,7 @@ import {catchError, Observable, throwError} from "rxjs";
 })
 export class LoginPageComponent implements OnInit {
   email: any;
+  GoogleLoginProvider = GoogleLoginProvider;
   hide: boolean = true;
   form: FormGroup = new FormGroup({
     email: new FormControl('', [Validators.email, Validators.required]),
@@ -23,16 +24,18 @@ export class LoginPageComponent implements OnInit {
   login:LoginInterface = {
     email:'',
     password:'',
+    provider:''
   };
   // socialUser!: SocialUser;
-  // isLoggedin?: boolean;
-  // user: gapi.auth2.GoogleUser;
+  user: SocialUser | undefined;
+  socialUser!: SocialUser;
+  loggedIn: boolean;
+  isLoggedin?: boolean;
   constructor(
     private auth:AuthService,
     private route:Router,
     // private signInService: GoogleSigninService,
-    private zone: NgZone,
-    // private socialAuthService: SocialAuthService
+    private authService: SocialAuthService,
 
   ) {
   }
@@ -41,20 +44,15 @@ export class LoginPageComponent implements OnInit {
     if (localStorage.getItem('b2b_token')){
       this.route.navigate(['account','user','info'])
     }
-    // this.signInService.observable().subscribe(user =>{
-    //     this.user = user
-    //     this.ref.detectChanges()
-    //     console.log(user)
-    // },error => {
-    //   console.log('error')
-    // })
 
-    // this.socialAuthService.authState.subscribe((user) => {
-    //   this.socialUser = user;
-    //   this.isLoggedin = user != null;
-    //   console.log(this.socialUser,this.isLoggedin);
-    // });
+    this.authService.authState.subscribe((user) => {
+      this.user = user;
 
+      this.loggedIn = (user != null);
+      if (this.loggedIn){
+        this.signIn(this.user)
+      }
+    });
   }
 
   getErrorMessagePassword() {
@@ -102,36 +100,36 @@ export class LoginPageComponent implements OnInit {
     const formData = {...this.form.value}
     this.login = {
       email:formData.email,
-      password:formData.password
+      password:formData.password,
+      provider:'DESKTOP'
     }
-    // this.auth.login(this.login).subscribe(res =>{
-    //   console.log(res)
-    //   this.route.navigate(['account','user','info'])
-    // })
+    this.auth.login(this.login).subscribe(res =>{
+      console.log(res)
+      this.route.navigate(['account','user','info'])
+    })
   }
-  signIn(){
+  signIn(userGoogle:SocialUser){
 
-    // this.signInService.signin().subscribe(res =>{
-    //   res.then((user:gapi.auth2.GoogleUser)=>{
-    //     this.user = user
-    //     let register:RegistrationInterface ={
-    //       name: this.user.getBasicProfile().getName(),
-    //       email:this.user.getBasicProfile().getEmail(),
-    //       password: this.user.getId(),
-    //       password_confirmation:this.user.getId(),
-    //       auth:'google'
-    //     }
-    //     return Promise.resolve(register)
-    //   }).then((register:RegistrationInterface)=>{
-    //     this.auth.loginGoogle(register).subscribe(res =>{
-    //       this.zone.run(() => {
-    //         this.route.navigate(['account','user','info'])
-    //       });
-    //     })
-    //   })
-    // })
+    const authGoogle:RegistrationInterface={
+        name: userGoogle.name,
+        email:userGoogle.email,
+        password: userGoogle.id,
+        password_confirmation:userGoogle.id,
+        provider:userGoogle.provider
+      }
+
+      this.auth.loginGoogle(authGoogle).subscribe(res =>{
+        console.log(res,'sdsd')
+        this.route.navigate(['account','user','info'])
+      },error => {
+        console.log(error,'!!!!!!!!!__!!')
+      })
+
   }
   signOut(){
-    // this.signInService.signOut()
+    this.authService.signOut();
+  }
+  refreshGoogleToken(): void {
+    this.authService.refreshAuthToken(GoogleLoginProvider.PROVIDER_ID).then(r => console.log(r));
   }
 }

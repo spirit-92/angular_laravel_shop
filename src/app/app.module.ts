@@ -18,11 +18,11 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatIconModule} from "@angular/material/icon";
 import { NavbarLayoutComponent } from './share/components/navbar-layout/navbar-layout.component';
 
-// import {
-//   SocialLoginModule,
-//   SocialAuthServiceConfig,
-// } from 'angularx-social-login';
-// import { GoogleLoginProvider } from 'angularx-social-login';
+import { SocialLoginModule, SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
+import {
+  GoogleLoginProvider,
+
+} from '@abacritt/angularx-social-login';
 
 import {
   NgxUiLoaderModule,
@@ -46,7 +46,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatCardModule} from "@angular/material/card";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatInputModule} from "@angular/material/input";
-
+import {LoginPageComponent} from "./admin/shared/components/pages/login-page/login-page.component";
 
 
 
@@ -87,44 +87,54 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     CardProductPageComponent,
     RatingLayoutComponent,
     AddCommentesLayoutComponent,
+    LoginPageComponent
 
 
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        AdminModule,
-        BrowserAnimationsModule,
-        MatButtonModule,
-        MatListModule,
-        MatSidenavModule,
-        MatIconModule,
-        MatProgressSpinnerModule,
-        NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
-        NgxUiLoaderHttpModule,
-        MatCardModule,
-        MatPaginatorModule,
-        FormsModule,
-        MatInputModule,
-        SwiperModule,
-        ReactiveFormsModule,
-        // SocialLoginModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    AdminModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatListModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
+    NgxUiLoaderHttpModule,
+    MatCardModule,
+    MatPaginatorModule,
+    FormsModule,
+    MatInputModule,
+    SwiperModule,
+    ReactiveFormsModule,
+    SocialLoginModule,
+
+  ],
+
   providers: [
     INTERCEPTOR_PROVIDER,
-    // {
-    //   provide: 'SocialAuthServiceConfig',
-    //   useValue: {
-    //     autoLogin: false,
-    //     providers: [
-    //       {
-    //         id: GoogleLoginProvider.PROVIDER_ID,
-    //         provider: new GoogleLoginProvider('276670737870-3qne4subcq0ib8i2cvd1kv6qoen43b8h.apps.googleusercontent.com'),
-    //       },
-    //     ],
-    //   } as SocialAuthServiceConfig,
-    // },
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: true,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider('922773321049-pbni6m7ucnqeodmkfr60rt1i0verojop.apps.googleusercontent.com',{
+              oneTapEnabled:false,
+              scopes: 'https://www.googleapis.com/auth/calendar.readonly'
+            }),
+          },
+        ],
+      } as SocialAuthServiceConfig,
+    },
+
   ],
+
+  exports:[],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
