@@ -70,7 +70,7 @@
       <div class="input-file">
         <input  (change)="onFileChange($event,1)" class="input-hide" id="input-file-1"  accept=".png, .jpg, .jpeg" type="file"/>
         <label for="input-file-1" class="label-upload"> </label>
-        <mat-form-field style="position: relative" appearance="legacy">
+        <mat-form-field style="position: relative">
           <mat-label>upload 1 file</mat-label>
           <input  formControlName="name_1" matInput  placeholder="Placeholder">
           <mat-icon style="color:white;" matSuffix>upload_file</mat-icon>
@@ -88,7 +88,7 @@
       <div class="input-file">
         <input (change)="onFileChange($event,2)" class="input-hide" id="input-file-2"  accept=".png, .jpg, .jpeg" type="file"/>
         <label for="input-file-2" class="label-upload"> </label>
-        <mat-form-field appearance="legacy">
+        <mat-form-field>
           <mat-label>upload 2 file</mat-label>
           <input formControlName="name_2" matInput placeholder="Placeholder">
           <mat-icon style="color:white;" matSuffix>upload_file</mat-icon>
@@ -105,7 +105,7 @@
       <div class="input-file">
         <input (change)="onFileChange($event,3)"  class="input-hide" id="input-file-3" accept=".png, .jpg, .jpeg" multiple type="file"/>
         <label for="input-file-3" class="label-upload"> </label>
-        <mat-form-field appearance="legacy">
+        <mat-form-field>
           <mat-label>upload 3 file</mat-label>
           <input formControlName="name_3"  matInput placeholder="Placeholder">
           <mat-icon style="color:white;" matSuffix>upload_file</mat-icon>
@@ -122,7 +122,7 @@
       <div class="input-file">
         <input (change)="onFileChange($event,4)"  class="input-hide" id="input-file-4" accept=".png, .jpg, .jpeg" multiple type="file"/>
         <label for="input-file-4" class="label-upload"> </label>
-        <mat-form-field appearance="legacy">
+        <mat-form-field >
           <mat-label>upload 4 file</mat-label>
           <input formControlName="name_4"  matInput placeholder="Placeholder">
           <mat-icon style="color:white;" matSuffix>upload_file</mat-icon>

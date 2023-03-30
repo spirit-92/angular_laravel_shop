@@ -4,6 +4,12 @@ import {AuthService} from "../../../admin/shared/services/authService/auth.servi
 import {Router} from "@angular/router";
 import {ProductServiceService} from "../../services/productService/product-service.service";
 import {NgxUiLoaderService} from "ngx-ui-loader";
+import {
+  GoogleLoginProvider,
+  SocialAuthService,
+  SocialAuthServiceConfig,
+  SocialUser
+} from "@abacritt/angularx-social-login";
 @Component({
   selector: 'app-header-layout',
   templateUrl: './header-layout.component.html',
@@ -11,11 +17,14 @@ import {NgxUiLoaderService} from "ngx-ui-loader";
 })
 export class HeaderLayoutComponent implements OnInit {
   isAuth:boolean = false;
+  user: SocialUser | undefined;
   constructor(
     private auth:AuthService,
     private route:Router,
     private prodService: ProductServiceService,
-    private ngxService: NgxUiLoaderService
+    private ngxService: NgxUiLoaderService,
+    private authService: SocialAuthService,
+
   ) { }
 
   ngOnInit(): void {
@@ -23,6 +32,12 @@ export class HeaderLayoutComponent implements OnInit {
     this.auth.checkAuth.subscribe(res =>{
       this.isAuth = res
     })
+    this.authService.authState.subscribe((user) => {
+      this.user = user;
+      localStorage.setItem('userObject', JSON.stringify(user));
+      console.log(this.user)
+
+    });
 
   }
 
@@ -32,6 +47,7 @@ export class HeaderLayoutComponent implements OnInit {
 
   logout() {
     this.auth.logout().subscribe(res =>{
+      this.authService.signOut();
       console.log(res)
       this.route.navigate(['account','user','login'])
     })

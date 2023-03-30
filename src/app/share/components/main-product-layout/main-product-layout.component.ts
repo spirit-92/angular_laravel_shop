@@ -2,7 +2,7 @@ import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {ProductServiceService} from "../../services/productService/product-service.service";
 import {Product, Products} from "../../services/interfaces/Product";
 import {environment} from "../../../../environments/environment";
-import {PageEvent} from "@angular/material/paginator";
+import {LegacyPageEvent as PageEvent} from "@angular/material/legacy-paginator";
 import {AuthService} from "../../../admin/shared/services/authService/auth.service";
 import {tap} from "rxjs";
 import {NgxUiLoaderService} from "ngx-ui-loader";

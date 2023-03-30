@@ -11,14 +11,18 @@ import { FooterLayoutComponent } from './share/components/footer-layout/footer-l
 import { AdminLayoutComponent } from './admin/shared/components/admin-layout/admin-layout.component';
 import {AdminModule} from "./admin/admin.module";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatButtonModule} from "@angular/material/button";
-import {MatListModule} from "@angular/material/list";
+
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {AuthInterceptor} from "./share/services/interceptor/auth.interceptor";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatIconModule} from "@angular/material/icon";
 import { NavbarLayoutComponent } from './share/components/navbar-layout/navbar-layout.component';
-import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+
+import { SocialLoginModule, SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
+import {
+  GoogleLoginProvider,
+
+} from '@abacritt/angularx-social-login';
 
 import {
   NgxUiLoaderModule,
@@ -26,18 +30,23 @@ import {
   POSITION,
   SPINNER,
   PB_DIRECTION,
-  NgxUiLoaderHttpModule
+  NgxUiLoaderHttpModule,
 } from "ngx-ui-loader";
 
 import { MainProductLayoutComponent } from './share/components/main-product-layout/main-product-layout.component';
-import {MatCardModule} from "@angular/material/card";
-import {MatPaginatorModule} from "@angular/material/paginator";
+
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {MatInputModule} from "@angular/material/input";
+
 import { CardProductPageComponent } from './share/pages/card-product-page/card-product-page.component';
 import { SwiperModule } from 'swiper/angular';
 import { AddCommentesLayoutComponent } from './share/components/add-commentes-layout/add-commentes-layout.component';
-
+import {MatButtonModule} from "@angular/material/button";
+import {MatListModule} from "@angular/material/list";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatCardModule} from "@angular/material/card";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatInputModule} from "@angular/material/input";
+import {LoginPageComponent} from "./admin/shared/components/pages/login-page/login-page.component";
 
 
 
@@ -78,30 +87,54 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     CardProductPageComponent,
     RatingLayoutComponent,
     AddCommentesLayoutComponent,
+    LoginPageComponent
 
 
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        AdminModule,
-        BrowserAnimationsModule,
-        MatButtonModule,
-        MatListModule,
-        MatSidenavModule,
-        MatIconModule,
-        MatProgressSpinnerModule,
-        NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
-        NgxUiLoaderHttpModule,
-        MatCardModule,
-        MatPaginatorModule,
-        FormsModule,
-        MatInputModule,
-        SwiperModule,
-        ReactiveFormsModule,
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    AdminModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatListModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
+    NgxUiLoaderHttpModule,
+    MatCardModule,
+    MatPaginatorModule,
+    FormsModule,
+    MatInputModule,
+    SwiperModule,
+    ReactiveFormsModule,
+    SocialLoginModule,
 
-    ],
-  providers: [INTERCEPTOR_PROVIDER],
+  ],
+
+  providers: [
+    INTERCEPTOR_PROVIDER,
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: true,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider('922773321049-pbni6m7ucnqeodmkfr60rt1i0verojop.apps.googleusercontent.com',{
+              oneTapEnabled:false,
+              scopes: 'https://www.googleapis.com/auth/calendar.readonly'
+            }),
+          },
+        ],
+      } as SocialAuthServiceConfig,
+    },
+
+  ],
+
+  exports:[],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+

@@ -9,7 +9,7 @@ import {
 } from "../interfaces/registrationInterface";
 import {environment} from "../../../../../environments/environment";
 import {GoogleSigninService} from "../../../../share/services/googleService/google-signin.service";
-
+import {SocialUser} from "@abacritt/angularx-social-login";
 
 
 @Injectable({
@@ -18,18 +18,18 @@ import {GoogleSigninService} from "../../../../share/services/googleService/goog
 
 export class AuthService {
   private auth: boolean = false;
-
-checkAuth = new BehaviorSubject(this.auth)
-
+  private googleUser:any = {};
+  checkAuth = new BehaviorSubject(this.auth)
+ public  checkGoogleUser = new BehaviorSubject(this.googleUser)
   constructor(
     private http: HttpClient,
-    private signInService: GoogleSigninService,
-  ) {
+
+    ) {
     // let test = this.token;
     // console.log(test, 'this token')
   }
 
-  get token(): string  {
+  get token(): string {
     const expToken = new Date(JSON.parse(JSON.stringify(localStorage.getItem('b2b_token-exp')))).getTime()
     const now = new Date().getTime();
     if (now > expToken) {
@@ -43,8 +43,11 @@ checkAuth = new BehaviorSubject(this.auth)
 
 
   }
+  public setGoogleUser(user:any){
+    this.checkGoogleUser.next(user)
+  }
 
-  registration(data: RegistrationInterface): Observable<any|answerRegisterUser> {
+  registration(data: RegistrationInterface): Observable<any | answerRegisterUser> {
     return this.http.post<answerRegisterUser>(`${environment.url}register`, {
       name: data.name,
       email: data.email,
@@ -52,32 +55,35 @@ checkAuth = new BehaviorSubject(this.auth)
       password_confirmation: data.password_confirmation,
     }).pipe(tap(this.setToken))
   }
-  login(data: any): Observable<any|answerLoginUser> {
+
+  login(data: any): Observable<any | answerLoginUser> {
     return this.http.post<answerLoginUser>(`${environment.url}login`, {
       email: data.email,
       password: data.password,
-      auth:'desk'
+      auth: 'desk'
     }).pipe(tap(this.setToken))
   }
-  loginGoogle(data: RegistrationInterface): Observable<any|answerRegisterUser> {
+
+  loginGoogle(data: RegistrationInterface): Observable<any | answerRegisterUser> {
+    console.log(data,'!!')
     return this.http.post<answerRegisterUser>(`${environment.url}login`, {
       name: data.name,
       email: data.email,
       password: data.password,
       password_confirmation: data.password_confirmation,
-      auth:data.auth
+      provider: data.provider
 
     }).pipe(tap(this.setToken))
   }
-  test(): Observable<any> {
-    return this.http.get<any>(`${environment.url}test`, {
 
-    })
+  test(): Observable<any> {
+    return this.http.get<any>(`${environment.url}test`, {})
   }
 
   checkEmail(email: any): Observable<any> {
     return this.http.get<any>(`${environment.url}checkEmail?email=${email}`)
   }
+
   existEmail(email: any): Observable<any> {
     return this.http.get<any>(`${environment.url}existEmail?email=${email}`)
   }
@@ -92,27 +98,31 @@ checkAuth = new BehaviorSubject(this.auth)
       this.logoutClearStorage()
     }
   }
-  isAuthenticated():boolean{
+
+  isAuthenticated(): boolean {
     return !!this.token
   }
+
   logoutClearStorage() {
     localStorage.removeItem('b2b_token')
     localStorage.removeItem('b2b_token-exp')
     this.checkAuth.next(false)
   }
-  logout():Observable<boolean>{
 
-    return this.http.post(`${environment.url}`+'logout',{}).pipe(switchMap(() =>{
+  logout(): Observable<boolean> {
+
+    return this.http.post(`${environment.url}` + 'logout', {}).pipe(switchMap(() => {
       this.checkAuth.next(false)
       this.logoutClearStorage()
-      this.signInService.signOut()
+      // this.signInService.signOut()
       return of(true)
-    }),catchError(err => {
+    }), catchError(err => {
       this.checkAuth.next(true)
       return of(false)
     }))
   }
-  authHeader():Observable<any>{
-     return this.checkAuth
+
+  authHeader(): Observable<any> {
+    return this.checkAuth
   }
 }

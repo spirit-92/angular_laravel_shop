@@ -4,7 +4,7 @@
       <div class="form__container">
         <h1 class="login_h1">Registration</h1>
 
-        <mat-form-field hintLabel="Max 10 characters" appearance="fill">
+        <mat-form-field hintLabel="Max 10 characters" appearance="outline">
           <mat-label>Name</mat-label>
           <input formControlName="userName" matInput #input maxlength="10" placeholder="Name user">
           <mat-hint align="end">{{input.value.length || 0}}/10</mat-hint>
@@ -12,7 +12,7 @@
         </mat-form-field>
 
         <!--    email form-->
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="outline">
           <mat-label>Enter your email</mat-label>
           <input (focusout)="checkEmail()" formControlName="email" matInput placeholder="pat@example.com" required>
           <mat-error *ngIf="this.form.controls['email'].status ==='INVALID'">{{getErrorMessageUserEmail()}}</mat-error>
@@ -20,7 +20,7 @@
 
         <!--    password form-->
 
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="outline">
           <mat-label>Enter your password</mat-label>
           <input formControlName="password" matInput [type]="hide ? 'password' : 'text'">
           <mat-error *ngIf="this.form.controls['password'].status ==='INVALID'">{{getErrorMessagePassword()}}</mat-error>
@@ -30,7 +30,7 @@
           </button>
         </mat-form-field>
 
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="outline">
           <mat-label> password confirm</mat-label>
           <input formControlName="password_confirm" matInput [type]="hide2 ? 'password' : 'text'">
           <mat-error *ngIf="this.form.controls['password_confirm'].status ==='INVALID'">{{getErrorMessagePassword2()}}</mat-error>

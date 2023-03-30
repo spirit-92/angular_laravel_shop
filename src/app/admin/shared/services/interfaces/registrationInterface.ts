@@ -2,12 +2,13 @@ export interface RegistrationInterface {
   name:string,
   email:string,
   password:string,
-  auth?:string,
+  provider?:string,
   password_confirmation:string
 }
 export interface LoginInterface {
   email:string,
   password:string,
+  provider:string
 }
 export interface answerLoginUser{
   user:string,
