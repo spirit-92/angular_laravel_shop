@@ -1,18 +1,19 @@
-import {Component, NgZone, OnInit} from '@angular/core';
+import {Component, NgZone, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {LoginInterface, RegistrationInterface} from "../../../services/interfaces/registrationInterface";
 import {AuthService} from "../../../services/authService/auth.service";
-import {Route, Router} from "@angular/router";
-import {catchError, Observable, throwError} from "rxjs";
+import {Router} from "@angular/router";
+import {catchError, Subscription, throwError} from "rxjs";
 import {SocialAuthService, SocialUser} from "@abacritt/angularx-social-login";
 import { GoogleLoginProvider } from "@abacritt/angularx-social-login";
+
 
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.scss']
 })
-export class LoginPageComponent implements OnInit {
+export class LoginPageComponent implements OnInit ,OnDestroy{
   email: any;
   GoogleLoginProvider = GoogleLoginProvider;
   hide: boolean = true;
@@ -26,15 +27,16 @@ export class LoginPageComponent implements OnInit {
     password:'',
     provider:''
   };
-  // socialUser!: SocialUser;
+
   user: SocialUser | undefined;
-  socialUser!: SocialUser;
+
   loggedIn: boolean;
-  isLoggedin?: boolean;
+
+  sub:Subscription
   constructor(
     private auth:AuthService,
     private route:Router,
-    // private signInService: GoogleSigninService,
+
     private authService: SocialAuthService,
 
   ) {
@@ -44,12 +46,12 @@ export class LoginPageComponent implements OnInit {
     if (localStorage.getItem('b2b_token')){
       this.route.navigate(['account','user','info'])
     }
-
-    this.authService.authState.subscribe((user) => {
+    this.sub = this.authService.authState.subscribe((user) => {
       this.user = user;
 
       this.loggedIn = (user != null);
       if (this.loggedIn){
+
         this.signIn(this.user)
       }
     });
@@ -104,7 +106,6 @@ export class LoginPageComponent implements OnInit {
       provider:'DESKTOP'
     }
     this.auth.login(this.login).subscribe(res =>{
-      console.log(res)
       this.route.navigate(['account','user','info'])
     })
   }
@@ -119,17 +120,16 @@ export class LoginPageComponent implements OnInit {
       }
 
       this.auth.loginGoogle(authGoogle).subscribe(res =>{
-        console.log(res,'sdsd')
+
         this.route.navigate(['account','user','info'])
+
       },error => {
         console.log(error,'!!!!!!!!!__!!')
       })
 
   }
-  signOut(){
-    this.authService.signOut();
-  }
-  refreshGoogleToken(): void {
-    this.authService.refreshAuthToken(GoogleLoginProvider.PROVIDER_ID).then(r => console.log(r));
+
+  ngOnDestroy() {
+    this.sub.unsubscribe()
   }
 }

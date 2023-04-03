@@ -4,12 +4,11 @@ import {BehaviorSubject, catchError, Observable, of, switchMap, tap} from "rxjs"
 import {
   answerLoginUser,
   answerRegisterUser,
-  LoginInterface,
   RegistrationInterface
 } from "../interfaces/registrationInterface";
 import {environment} from "../../../../../environments/environment";
-import {GoogleSigninService} from "../../../../share/services/googleService/google-signin.service";
-import {SocialUser} from "@abacritt/angularx-social-login";
+
+import {Router} from "@angular/router";
 
 
 @Injectable({
@@ -23,7 +22,7 @@ export class AuthService {
  public  checkGoogleUser = new BehaviorSubject(this.googleUser)
   constructor(
     private http: HttpClient,
-
+    private route:Router,
     ) {
     // let test = this.token;
     // console.log(test, 'this token')
@@ -57,15 +56,16 @@ export class AuthService {
   }
 
   login(data: any): Observable<any | answerLoginUser> {
+    console.log('login')
     return this.http.post<answerLoginUser>(`${environment.url}login`, {
       email: data.email,
       password: data.password,
-      auth: 'desk'
+      provider: data.provider
     }).pipe(tap(this.setToken))
   }
 
   loginGoogle(data: RegistrationInterface): Observable<any | answerRegisterUser> {
-    console.log(data,'!!')
+    console.log('loginGoogle')
     return this.http.post<answerRegisterUser>(`${environment.url}login`, {
       name: data.name,
       email: data.email,
@@ -74,6 +74,7 @@ export class AuthService {
       provider: data.provider
 
     }).pipe(tap(this.setToken))
+
   }
 
   test(): Observable<any> {
