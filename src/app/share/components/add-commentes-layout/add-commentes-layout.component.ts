@@ -7,7 +7,8 @@ import {CommentsInterfaceGet, CommentsInterfaceSave} from "../../services/interf
 @Component({
   selector: 'app-add-commentes-layout',
   templateUrl: './add-commentes-layout.component.html',
-  styleUrls: ['./add-commentes-layout.component.scss']
+  styleUrls: ['./add-commentes-layout.component.scss'],
+
 })
 
 export class AddCommentesLayoutComponent implements OnInit {
@@ -32,8 +33,9 @@ export class AddCommentesLayoutComponent implements OnInit {
 
   submit() {
     this.saveCommets.comment = this.form.get('comments')?.value
-
+    console.log(this.saveCommets.comment,'!')
     this.productService.addComment(this.saveCommets).subscribe((res:CommentsInterfaceGet) =>{
+      console.log(res,'!!')
       this.comment.emit(res)
       this.form.get('comments')?.setValue('')
     })

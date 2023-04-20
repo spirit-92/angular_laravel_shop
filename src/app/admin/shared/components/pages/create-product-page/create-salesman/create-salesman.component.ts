@@ -58,6 +58,7 @@ export class CreateSalesmanComponent implements OnInit,AfterViewInit {
 
     })
     this.createProductService.getRegionUkraine().subscribe((res:RegionUkraine[]) =>{
+      console.log(res)
       this.regions = res
     })
 
@@ -67,20 +68,21 @@ export class CreateSalesmanComponent implements OnInit,AfterViewInit {
     if (this.firstCheck){
 
       const {...salesman} = this.form.controls
+
       this.createSalesman = {
-        "city_id": salesman.city.value,
+        "region": salesman.city.value,
         "email": salesman.email.value,
         "site": salesman.site.value,
         "firm": salesman.firm.value,
         "name":  salesman.name.value,
         "phone":  salesman.phone.value,
       }
-
+      //   console.log(this.createSalesman)
       this.createProductService.createdSalesman(this.createSalesman).subscribe((res:SalesmanInterface) =>{
         this.savedSalesman.push(res)
         this.form.reset({
           'salesman': res.id,
-          'city': null,
+          'region': null,
           'email': '',
           'site': '',
           'firm': '',
@@ -135,7 +137,7 @@ export class CreateSalesmanComponent implements OnInit,AfterViewInit {
         this.form.controls['email'].setErrors(null)
       },error => {
         this.form.controls['email'].setErrors({checkEmailValidator:true})
-        console.clear()
+
       })
     }
   }
@@ -163,6 +165,12 @@ export class CreateSalesmanComponent implements OnInit,AfterViewInit {
       return `The "${this.form.controls['phone'].value}" ${this.errorPhone}`;
     }
     return 'You must enter a value';
+  }
+  getErrorMessageSalesmanName(){
+    if (this.form.controls['name'].hasError('required')) {
+      return 'You must enter a value';
+    }
+    return null;
   }
 
   getErrorMessageSalesmanSite() {

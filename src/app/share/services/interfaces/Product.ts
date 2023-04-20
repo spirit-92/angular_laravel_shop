@@ -11,7 +11,7 @@ export interface Product {
   "title": string,
   "description": string,
   "price": string,
-  "iamges": any[],
+  "images": any[],
   "comments":[{
     comment:string
     id: number
@@ -19,7 +19,7 @@ export interface Product {
   }],
   "salesman": {
     "id": number,
-    "city": string,
+    "region": string,
     "email": string,
     "site": string,
     "firm": string,
@@ -33,7 +33,7 @@ export interface Product {
   },
   "region": {
     "id": number,
-    "region": string
+    "name": string
   },
   "rating": number,
   "characteristics": string,

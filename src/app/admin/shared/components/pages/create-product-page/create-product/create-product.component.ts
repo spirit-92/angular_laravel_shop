@@ -50,9 +50,7 @@ export class CreateProductComponent implements OnInit {
   }]
   saveProduct: CreateProduct
 
-  saveJson: saveJson = {
-    Characteristics: {}
-  }
+  saveJson: any[]
   count = 1
   countControlsFeatures: indexX[] = [
     {id: 1}
@@ -111,13 +109,13 @@ export class CreateProductComponent implements OnInit {
 
     let formdata = new FormData()
     formdata.append("image", file);
-
     this.createProductService.checkImage(formdata).pipe(catchError(err => {
       this.errorImages[id - 1].error = err.error.errors.image
       console.log('Handling error locally and rethrowing it...', err.error.errors);
       return throwError(err);
 
     })).subscribe(res => {
+      console.log(res)
       this.form.controls[`name_${id}`].setErrors(null)
       this.errorImages[id - 1].status = false
     }, error => {
@@ -151,11 +149,14 @@ export class CreateProductComponent implements OnInit {
   checkExistPrice() {
     // console.log(this.form.controls['email'].hasError('required')this.form.controls['email'].hasError('email'))
     if (!this.form.controls['price'].hasError('required')) {
-      const f = (x: any) => ((x.toString().includes('.')) ? (x.toString().split('.').pop().length) : (0));
-      if (f(this.form.controls['price'].value) === 1) {
-        this.form.controls['price'].setValue(this.form.controls['price'].value.toFixed(2))
-      }
 
+      const f = (x: any) => ((x.toString().includes('.')) ? (x.toString().split('.').pop().length) : (0));
+
+      if (f(this.form.controls['price'].value) === 1) {
+
+        this.form.controls['price'].setValue(Number(this.form.controls['price'].value).toFixed(2))
+      }
+      console.log(this.form.controls['price'].value,'!!')
       this.createProductService.checkPrice(this.form.controls['price'].value).pipe(catchError(err => {
         console.log('Handling error locally and rethrowing it...', err.status);
         return throwError(err);
@@ -218,18 +219,17 @@ export class CreateProductComponent implements OnInit {
       'region_id': this.form.get('city')?.value,
       'characteristics': JSON.stringify(this.saveJson),
     }
+    console.log(this.saveProduct)
     let form: any = this.saveProduct
     for (let key in form) {
       formData.append(key, form[key]);
     }
-
+    console.log(this.form)
     for (let i = 0; i < 4; i++) {
       if (this.form.get(`image_${i + 1}`)?.value) {
         let file: any = this.form.get(`image_${i + 1}`)?.value
-        formData.append(`image[${i}]`, file);
+        formData.append(`image[${i+1}]`, file);
       }
-
-      // ещё какие-то выражения
     }
     this.createProductService.createdProduct(formData).subscribe(res => {
       console.log(res)
@@ -244,7 +244,7 @@ export class CreateProductComponent implements OnInit {
     }, error => {
       this.ngxService.stop()
     })
-    // console.log(this.saveProduct)
+    console.log(this.saveProduct)
   }
 
   addFeatures() {
@@ -284,7 +284,7 @@ export class CreateProductComponent implements OnInit {
 
   addJson() {
     this.jsonFeatures = [];
-    this.saveJson.Characteristics = {}
+    this.saveJson=[]
     this.countControlsFeatures.forEach(res => {
       const saveFeatures: jsonFeatures = {
         id: res.id,
@@ -295,7 +295,11 @@ export class CreateProductComponent implements OnInit {
     })
     this.jsonFeatures.forEach(res => {
 
-      this.saveJson.Characteristics[res.name] = res.features
+      this.saveJson.push({
+        'name':res.name,
+        'value':res.features
+      })
+
 
     })
 

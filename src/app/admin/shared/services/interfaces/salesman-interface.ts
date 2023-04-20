@@ -9,11 +9,11 @@ export interface SalesmanInterface {
 }
 export interface RegionUkraine {
   "id": number,
-  "region": string,
+  "name": string,
 
 }
 export interface SalesmanCreateInterface{
-  'city_id':string,
+  'region':string,
   'email': string,
   'site'?: string,
   'firm'?: string,

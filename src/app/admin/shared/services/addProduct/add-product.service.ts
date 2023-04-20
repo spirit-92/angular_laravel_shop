@@ -17,27 +17,28 @@ export class AddProductService {
   ) {}
 
   public  getSalesman():Observable<SalesmanInterface[]>{
-    return this.http.get<SalesmanInterface[]>(`${environment.url}admin_sales_man`)
+    return this.http.get<SalesmanInterface[]>(`${environment.url}salesmans`)
   }
   public  getRegionUkraine():Observable<RegionUkraine[]>{
-    return this.http.get<RegionUkraine[]>(`${environment.url}admin_region_ukraine`)
+    return this.http.get<RegionUkraine[]>(`${environment.url}region`)
   }
   public getCategory():Observable<CategoriesInterface[]>{
-    return this.http.get<CategoriesInterface[]>(`${environment.url}admin_categories_product`)
+    return this.http.get<CategoriesInterface[]>(`${environment.url}categories_product`)
   }
   public checkTitle(title:string):Observable<any>{
-    return this.http.get<any>(`${environment.url}admin_product_checkValidate/title?title=${title}`)
+    return this.http.get<any>(`${environment.url}validate/product?title=${title}`)
   }
   public checkPrice(price:number):Observable<any>{
-    return this.http.get<any>(`${environment.url}admin_product_checkValidate/price?price=${price}`)
+    return this.http.get<any>(`${environment.url}validate/product?price=${price}`)
   }
   public checkImage(image:any):Observable<any>{
-    return this.http.post<any>(`${environment.url}admin_product_checkValidate/image`,image)
+    return this.http.post<any>(`${environment.url}validate/product/images`,image)
   }
   public checkEmail(email:string):Observable<any>{
     return this.http.get<any>(`${environment.url}admin_sales_man_checkValidate/email?email=${email}`)
   }
   public checkPhone(phone:string):Observable<any>{
+    phone = phone.replace(/^\+/, '%2B');
     return this.http.get<any>(`${environment.url}admin_sales_man_checkValidate/phone?phone=${phone}`)
   }
   public checkSite(site:string):Observable<any>{
@@ -47,6 +48,6 @@ export class AddProductService {
     return this.http.post<SalesmanInterface>(`${environment.url}admin_sales_man`,salesman)
   }
   public createdProduct(product:any):Observable<any>{
-    return this.http.post<any>(`${environment.url}admin_product`,product)
+    return this.http.post<any>(`${environment.url}product`,product)
   }
 }

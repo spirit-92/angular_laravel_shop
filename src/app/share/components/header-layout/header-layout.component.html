@@ -18,14 +18,16 @@
       </mat-list>
     </div>
 
-    <mat-list *ngIf="isAuth" class="matListCustom">
+    <mat-list *ngIf="isAuth" style="min-width: 350px" class="matListCustom">
 
       <mat-list-item>
         <a routerLink="/account/user/create-product" mat-raised-button href="javascript:void(0);">Create Product</a>
       </mat-list-item>
+      <mat-divider [vertical]="true"></mat-divider>
       <mat-list-item (click)="logout()">
-        <a mat-raised-button href="javascript:void(0);">Logout</a>
+        <a style="width: 100%"  mat-raised-button href="javascript:void(0);">Logout</a>
       </mat-list-item>
+
     </mat-list>
   </div>
 </header>

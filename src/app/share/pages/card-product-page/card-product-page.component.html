@@ -2,7 +2,7 @@
   <div *ngIf="product" class="row">
     <div class="col-md-6">
       <div class="container-swiper">
-        <div *ngIf="product.iamges;then slider else notImg"></div>
+        <div *ngIf="product.images;then slider else notImg"></div>
         <ng-template #slider>
           <swiper
             style="--swiper-navigation-color: #fff;--swiper-pagination-color: #fff"
@@ -12,12 +12,12 @@
             [thumbs]="{ swiper: thumbsSwiper }"
             class="mySwiper2"
           >
-            <ng-template *ngFor="let test of product.iamges" swiperSlide>
-              <img style="max-width: 100%;margin: 0 auto" [src]="evnUrl+test"/>
+            <ng-template *ngFor="let test of product.images" swiperSlide>
+              <img style="max-width: 100%;margin: 0 auto" [src]="test"/>
             </ng-template>
 
           </swiper>
-          <swiper *ngIf="product.iamges.length>1 "
+          <swiper   *ngIf="product.images.length>1 "
                   (swiper)="thumbsSwiper = $event"
                   [spaceBetween]="10"
                   [slidesPerView]="4"
@@ -27,8 +27,8 @@
                   class="mySwiper"
           >
 
-            <ng-template swiperSlide *ngFor="let img of product.iamges">
-              <img style="max-width: 100%" [src]="evnUrl+img"/>
+            <ng-template swiperSlide *ngFor="let img of product.images">
+              <img style="max-width: 100%" [src]="img"/>
             </ng-template>
 
           </swiper>
@@ -54,10 +54,10 @@
           </ul>
         </div>
         <div *ngIf="showNav ==='description'" class="description_product_container">
-          <ul class="description_product_ul">
+          <ul *ngIf="characteristics.length" class="description_product_ul">
             <li *ngFor="let description of characteristics">
-              <p><b>{{description.characteristic|titlecase }} : </b></p>
-              <p>{{description.property}}</p>
+              <p><b>{{description.name|titlecase }} : </b></p>
+              <p>{{description.value}}</p>
             </li>
 
           </ul>
@@ -91,7 +91,7 @@
       <div class="description_container">
         <div class="description_product">
           <h3 class="mat-h2">Регион:</h3>
-          <p>{{product.region.region}}</p>
+          <p>{{product.region.name}}</p>
         </div>
       </div>
       <div class="description_container">
@@ -118,7 +118,7 @@
             </li>
             <li>
               <span>Город: </span>
-              <span>{{product.salesman.city}}</span>
+              <span>{{product.salesman.region}}</span>
             </li>
             <li>
               <span>Почта: </span>

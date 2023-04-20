@@ -3,7 +3,7 @@
     <mat-sidenav-container *ngIf="categorise; else loaderShow" class="container-nav">
       <mat-sidenav-content *ngFor="let category of categorise">
         <a (click)="showProductByCategory(category.id)" href="javascript:void(0);">
-        <img src="{{environments+ category.icon}}">
+        <img src="{{category.icon}}">
         <p>{{category.name}}
         <mat-icon style="color: #303030;margin-right: -8px">arrow_back_ios</mat-icon>
         </p>

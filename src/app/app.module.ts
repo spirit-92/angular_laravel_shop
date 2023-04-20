@@ -47,6 +47,7 @@ import {MatCardModule} from "@angular/material/card";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatInputModule} from "@angular/material/input";
 import {LoginPageComponent} from "./admin/shared/components/pages/login-page/login-page.component";
+import {NgOptimizedImage} from "@angular/common";
 
 
 
@@ -91,27 +92,28 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 
 
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    AdminModule,
-    BrowserAnimationsModule,
-    MatButtonModule,
-    MatListModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatProgressSpinnerModule,
-    NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
-    NgxUiLoaderHttpModule,
-    MatCardModule,
-    MatPaginatorModule,
-    FormsModule,
-    MatInputModule,
-    SwiperModule,
-    ReactiveFormsModule,
-    SocialLoginModule,
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        AdminModule,
+        BrowserAnimationsModule,
+        MatButtonModule,
+        MatListModule,
+        MatSidenavModule,
+        MatIconModule,
+        MatProgressSpinnerModule,
+        NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
+        NgxUiLoaderHttpModule,
+        MatCardModule,
+        MatPaginatorModule,
+        FormsModule,
+        MatInputModule,
+        SwiperModule,
+        ReactiveFormsModule,
+        SocialLoginModule,
+        NgOptimizedImage,
 
-  ],
+    ],
 
   providers: [
     INTERCEPTOR_PROVIDER,
