@@ -1,10 +1,7 @@
 import {
-  AfterContentChecked,
-  AfterContentInit, AfterViewChecked,
-  AfterViewInit,
-  Component, ContentChild, ContentChildren, DoCheck,
-  ElementRef, OnChanges, OnDestroy,
-  OnInit, QueryList, SimpleChanges,
+  Component,
+  ElementRef,
+  OnInit, QueryList,
   ViewChild, ViewChildren
 } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
@@ -12,9 +9,8 @@ import {ProductServiceService} from "../../services/productService/product-servi
 import {Product} from "../../services/interfaces/Product";
 import {environment} from "../../../../environments/environment";
 import SwiperCore, {FreeMode, Navigation, Thumbs} from "swiper";
-import {BehaviorSubject, Observable, Subject} from "rxjs";
 import {CommentsInterfaceGet} from "../../services/interfaces/Comments-interface";
-import {GoogleLoginProvider, SocialAuthService} from "@abacritt/angularx-social-login";
+
 
 SwiperCore.use([FreeMode, Navigation, Thumbs]);
 
@@ -35,8 +31,8 @@ export class CardProductPageComponent implements OnInit{
   showNav: string = 'comments'
   checkUlRender = true;
   characteristics: Array<{
-    'characteristic': string,
-    'property': string
+    'name': string,
+    'value': string
   }> = []
 
   @ViewChild('nav_ul') ulEl: ElementRef;
@@ -55,19 +51,12 @@ export class CardProductPageComponent implements OnInit{
     this.productId = +this.router.snapshot.params['id']
 
 
-    // this.productService.getProduct(this.productId).subscribe((res: Product) => {
-    //   console.log(res)
-    //     this.product = res
-    //     let jsonP = JSON.parse(res.characteristics)
-    //     for (let variable in jsonP.Characteristics) {
-    //       this.characteristics.push({
-    //         characteristic: variable,
-    //         property: jsonP.Characteristics[variable]
-    //       })
-    //     }
-    //
-    //   }
-    // )
+    this.productService.getProduct(this.productId).subscribe((res: Product) => {
+        console.log(res)
+        this.product = res
+       this.characteristics = JSON.parse(res.characteristics)
+    }
+    )
 
 
   }

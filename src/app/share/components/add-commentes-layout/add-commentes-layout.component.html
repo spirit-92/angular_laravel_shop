@@ -1,7 +1,7 @@
 <form class="d-flex flex-column" [formGroup]="form" (ngSubmit)="submit()">
   <mat-form-field appearance="fill">
     <mat-label>Add comment</mat-label>
-    <textarea style=" margin-left: -0.7em;margin-top: 0.7em;"  class="input_text" formControlName="comments" matInput placeholder="comment"></textarea>
+    <textarea style="margin-left: -1em;margin-top: -0.5em;"  class="input_text" formControlName="comments" matInput placeholder="comment"></textarea>
     <mat-error
       *ngIf="this.form.get('comments')?.status ==='INVALID'">{{getErrorMessageInvalid()}}
     </mat-error>

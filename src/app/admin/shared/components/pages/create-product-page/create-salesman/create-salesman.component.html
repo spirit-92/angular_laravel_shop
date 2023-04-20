@@ -22,11 +22,11 @@
       <ng-template #newSalesman>
       <div class="container-city container-product__field">
         <h4 class="mat-form-field-wrapper">City</h4>
-        <mat-form-field appearance="fill">
+        <mat-form-field  appearance="fill">
           <mat-label>City</mat-label>
-          <mat-select formControlName="city">
+          <mat-select  formControlName="city">
 
-            <mat-option *ngFor="let city  of regions" [value]="city.id">{{city.region}}</mat-option>
+            <mat-option  *ngFor="let city  of regions" [value]="city.id">{{city.name}}</mat-option>
 
           </mat-select>
         </mat-form-field>
@@ -67,6 +67,7 @@
         <mat-form-field appearance="fill">
           <mat-label>Name</mat-label>
           <input formControlName="name" matInput placeholder="Name">
+          <mat-error *ngIf="this.form.controls['name'].status ==='INVALID'">{{getErrorMessageSalesmanName()}}</mat-error>
         </mat-form-field>
       </div>
       <!--*name-->

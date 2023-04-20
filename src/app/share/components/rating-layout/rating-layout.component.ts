@@ -10,13 +10,13 @@ import {NgxUiLoaderService} from "ngx-ui-loader";
   styleUrls: ['./rating-layout.component.scss']
 })
 export class RatingLayoutComponent implements OnInit {
-  @Input() rating:{
-    product_id:number,
-    product_rating:number
+  @Input() rating: {
+    product_id: number,
+    product_rating: number
   }
-  @Input() isAuth:boolean
-  @Input() product:Product
-  @Input() productService:ProductServiceService
+  @Input() isAuth: boolean
+  @Input() product: Product
+  @Input() productService: ProductServiceService
 
   constructor(
     private auth: AuthService,
@@ -26,30 +26,44 @@ export class RatingLayoutComponent implements OnInit {
 
   ngOnInit(): void {
     this.isAuth = this.auth.isAuthenticated()
+
   }
+
   counterRate(i: number) {
-    return new Array(Math.round(i == 0 ? 1 : i));
+    return new Array(Math.round(i == 0 || i == null ? 1 : i));
   }
 
   counterRateDef(rating: number) {
     return new Array(Math.round(5 - rating === 5 ? 4 : 5 - rating));
   }
-  saveRating(number: number, idProduct: number) {
 
+  saveRatingPlus(number: number, idProduct: number) {
+
+      let saveRating = (this.rating.product_rating === null ? 1 : this.rating.product_rating) + (number === 0 ? 1 : number)
+      this.saveRating(saveRating,idProduct)
+
+
+  }
+
+  saveRatingMinus(saveRating: number,idProduct: number) {
+    this.saveRating(saveRating,idProduct)
+  }
+
+  saveRating(rate: number,idProduct:number) {
     if (this.isAuth) {
       this.ngxService.start()
-      let rating = Math.round(number)
-      this.productService.saveProductRating(rating, idProduct).subscribe(res => {
+      console.log(rate)
+      this.productService.saveProductRating(rate, idProduct).subscribe(res => {
+        console.log(res)
         this.product.rating = res.averageRating
         this.ngxService.stop()
-      },error => {
+      }, error => {
         this.ngxService.stop()
-      },()=>{
+      }, () => {
         this.ngxService.stop()
       })
-    }else {
+    } else {
       this.ngxService.stop()
     }
   }
-
 }

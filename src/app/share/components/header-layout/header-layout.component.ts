@@ -28,22 +28,19 @@ export class HeaderLayoutComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.auth.isAuthenticated()
+
     this.auth.checkAuth.subscribe(res =>{
       this.isAuth = res
     })
-    this.authService.authState.subscribe((user) => {
-      this.user = user;
-      localStorage.setItem('userObject', JSON.stringify(user));
-      console.log(this.user)
-
-    });
+    // this.authService.authState.subscribe((user) => {
+    //   this.user = user;
+    //   localStorage.setItem('userObject', JSON.stringify(user));
+    //   console.log(this.user)
+    //
+    // });
 
   }
 
-  onClick(event: MouseEvent) {
-    event.preventDefault();
-  }
 
   logout() {
     this.auth.logout().subscribe(res =>{

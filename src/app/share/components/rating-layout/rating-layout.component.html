@@ -1,11 +1,11 @@
 <div  class="rating d-flex align-items-center">
   <button class="rating_btn" *ngFor="let rate of counterRate(rating.product_rating);let i = index">
-    <mat-icon  (click)="saveRating(i+1,rating.product_id)"  class="star_icon rating_icon" >star_rate</mat-icon>
+    <mat-icon  (click)="saveRatingMinus(i+1,rating.product_id)"  class="star_icon rating_icon" >star_rate</mat-icon>
   </button>
 
   <div *ngIf="isAuth" class="d-flex align-items-center">
     <button class="rating_btn" *ngFor="let rate of counterRateDef(rating.product_rating);let i = index">
-      <mat-icon (click)="saveRating((rating.product_rating===0?1:rating.product_rating)+i+1,rating.product_id)"  class="star_icon star_icon-def rating_icon" >star_rate</mat-icon>
+      <mat-icon (click)="saveRatingPlus(i+1,rating.product_id)"  class="star_icon star_icon-def rating_icon" >star_rate</mat-icon>
     </button>
   </div>
 </div>

@@ -24,11 +24,11 @@
   <!--  price-->
   <div class="container-price container-product__field">
     <h4 class="mat-form-field-wrapper">Price</h4>
-    <mat-form-field style="max-width: 201px;" appearance="fill" floatLabel="always">
+    <mat-form-field appearance="fill" floatLabel="always">
       <mat-label>Price</mat-label>
-      <input (focusout)="checkExistPrice()" step="0.01" matInput type="number" formControlName="price"
+      <input  (focusout)="checkExistPrice()" step="0.01" matInput type="text" formControlName="price"
              class="example-right-align" placeholder="0">
-      <span style="color: rgba(255,255,255,.7)" matPrefix>$&nbsp;</span>
+      <span style="color: rgba(255,255,255,.7);padding: 25px 0 8px 10px;display: flex" matPrefix>$&nbsp;</span>
       <!--      <span matSuffix>.00</span>-->
       <mat-error *ngIf="this.form.controls['price'].status ==='INVALID'">{{getErrorMessagePrice()}}</mat-error>
     </mat-form-field>
@@ -55,7 +55,7 @@
       <mat-label>City</mat-label>
       <mat-select formControlName="city">
 
-        <mat-option *ngFor="let city  of regions" [value]="city.id">{{city.region}}</mat-option>
+        <mat-option *ngFor="let city  of regions" [value]="city.id">{{city.name}}</mat-option>
 
       </mat-select>
     </mat-form-field>
@@ -70,7 +70,7 @@
       <div class="input-file">
         <input  (change)="onFileChange($event,1)" class="input-hide" id="input-file-1"  accept=".png, .jpg, .jpeg" type="file"/>
         <label for="input-file-1" class="label-upload"> </label>
-        <mat-form-field style="position: relative">
+        <mat-form-field appearance="outline" style="position: relative">
           <mat-label>upload 1 file</mat-label>
           <input  formControlName="name_1" matInput  placeholder="Placeholder">
           <mat-icon style="color:white;" matSuffix>upload_file</mat-icon>
@@ -88,7 +88,7 @@
       <div class="input-file">
         <input (change)="onFileChange($event,2)" class="input-hide" id="input-file-2"  accept=".png, .jpg, .jpeg" type="file"/>
         <label for="input-file-2" class="label-upload"> </label>
-        <mat-form-field>
+        <mat-form-field appearance="outline">
           <mat-label>upload 2 file</mat-label>
           <input formControlName="name_2" matInput placeholder="Placeholder">
           <mat-icon style="color:white;" matSuffix>upload_file</mat-icon>
@@ -105,7 +105,7 @@
       <div class="input-file">
         <input (change)="onFileChange($event,3)"  class="input-hide" id="input-file-3" accept=".png, .jpg, .jpeg" multiple type="file"/>
         <label for="input-file-3" class="label-upload"> </label>
-        <mat-form-field>
+        <mat-form-field appearance="outline">
           <mat-label>upload 3 file</mat-label>
           <input formControlName="name_3"  matInput placeholder="Placeholder">
           <mat-icon style="color:white;" matSuffix>upload_file</mat-icon>
@@ -122,7 +122,7 @@
       <div class="input-file">
         <input (change)="onFileChange($event,4)"  class="input-hide" id="input-file-4" accept=".png, .jpg, .jpeg" multiple type="file"/>
         <label for="input-file-4" class="label-upload"> </label>
-        <mat-form-field >
+        <mat-form-field appearance="outline">
           <mat-label>upload 4 file</mat-label>
           <input formControlName="name_4"  matInput placeholder="Placeholder">
           <mat-icon style="color:white;" matSuffix>upload_file</mat-icon>
