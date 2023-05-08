@@ -7,6 +7,7 @@ import {AuthService} from "../../../admin/shared/services/authService/auth.servi
 import {catchError, finalize, tap, throwError} from "rxjs";
 import {NgxUiLoaderService} from "ngx-ui-loader";
 import {Router} from "@angular/router";
+import {SearchProductInterface} from "../search-product/search-product.component";
 
 @Component({
   selector: 'app-main-product-layout',
@@ -15,17 +16,18 @@ import {Router} from "@angular/router";
 })
 export class MainProductLayoutComponent implements OnInit {
 
-  products: Products
+  products: Products;
+  defaultProducts: Products;
   environments: string;
   length = 0;
   pageSize = 9;
   pageSizeOptions: number[] = [3, 9, 12, 15, 18, 21, 30];
   isAuth: boolean;
   category_id = 0
-
+  searchValue:string=''
+  productSearch:Product[]
   constructor(
     public productService: ProductServiceService,
-
     private ngxService: NgxUiLoaderService,
     private route: Router
   ) {
@@ -37,8 +39,15 @@ export class MainProductLayoutComponent implements OnInit {
     this.productService.getAllProduct(1, this.pageSize, 0)
       .pipe(
         tap((res: Products) => {
+            res.product.map(item =>{
+            item.images = item.images !==null? Object.values(item.images):item.images
+              return item
+          })
+          console.log(res)
           this.length = res.total
           this.products = res
+          this.defaultProducts =  JSON.parse(JSON.stringify(res));
+          console.log(this.defaultProducts,'init')
 
           // this.pageSize = res.product.length
           this.ngxService.stop()
@@ -58,7 +67,7 @@ export class MainProductLayoutComponent implements OnInit {
       this.category_id = category_id
 
       this.productService.getAllProduct(1, 9, this.category_id).subscribe((prod: Products) => {
-        console.log(prod,'!___!!')
+        console.log(prod, '!___!!')
         this.length = prod.total
         this.products = prod
         this.pageSize = prod.product.length
@@ -72,13 +81,23 @@ export class MainProductLayoutComponent implements OnInit {
     })
 
   }
-  confirmPageChange($event: PageEvent) {
 
-    this.productService.getAllProduct($event.pageIndex + 1, $event.pageSize, this.category_id).subscribe((res: Products) => {
-      console.log(res)
-      this.length = res.total
-      this.products = res
-    })
+  confirmPageChange($event: PageEvent) {
+    if (this.searchValue){
+
+      const startIndex = $event.pageIndex * this.pageSize;
+      // const pageItems = items.slice(startIndex, endIndex);
+      console.log(startIndex,startIndex+this.pageSize)
+
+      this.products.product = this.productSearch.slice(startIndex,startIndex+this.pageSize)
+      // console.log(this.productSearch.splice(9,18))
+    }else {
+      this.productService.getAllProduct($event.pageIndex + 1, $event.pageSize, this.category_id).subscribe((res: Products) => {
+        this.length = res.total
+        this.products = res
+      })
+    }
+
 
 
   }
@@ -90,8 +109,26 @@ export class MainProductLayoutComponent implements OnInit {
     }
   }
 
-   isObjectEmpty(obj:any):boolean {
-    if (obj === null || Array.isArray(obj)) return false
-    return !!Object.keys(obj).length  && obj.constructor === Object;
+  isObjectEmpty(obj: any): boolean {
+
+    if (obj === null || Array.isArray(obj) && obj.length === 0) return false
+    if (obj.length) return  true
+    return !!Object.keys(obj).length && obj.constructor === Object;
+  }
+
+  onChildEvent(products: SearchProductInterface) {
+    this.searchValue = products.value
+
+    if (products.products.length === 0) {
+      // this.products = this.defaultProducts
+      this.length = this.defaultProducts.total
+      this.products =  JSON.parse(JSON.stringify(this.defaultProducts));
+      console.log('default',this.products)
+    } else {
+      this.length = products.products.length
+      this.productSearch = products.products
+      this.products.product = products.products.slice(0,this.pageSize)
+    }
+
   }
 }

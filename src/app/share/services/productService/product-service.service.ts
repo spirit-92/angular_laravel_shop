@@ -16,7 +16,6 @@ export class ProductServiceService {
   ) { }
 
   public getAllProduct(page=1,showPage=9,category_id= 0):Observable<Products>{
-    console.log(`${environment.url}product?category_id=${category_id}&page=${page}&showPage=${showPage}`)
     return this.http.get<Products>(`${environment.url}product?category_id=${category_id}&page=${page}&showPage=${showPage}`)
   }
 
@@ -32,6 +31,9 @@ export class ProductServiceService {
 
   public productByCategory(product:number){
     this.showProductByCategory.next(product)
+  }
+  public productSearch(value:string):Observable<Product[]>{
+    return this.http.get<Product[]>(`${environment.url}product/search?name=${value}`)
   }
 
   public getProduct(productId:number):Observable<Product>{

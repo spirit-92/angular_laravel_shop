@@ -28,3 +28,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;padding: 0}
 //.mat-mdc-card {
 //  --mdc-elevated-card-container-color: #ffffff;
 //}
+.mdc-card__media{
+  max-height: 350px;
+}

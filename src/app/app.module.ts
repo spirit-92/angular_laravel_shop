@@ -48,6 +48,8 @@ import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatInputModule} from "@angular/material/input";
 import {LoginPageComponent} from "./admin/shared/components/pages/login-page/login-page.component";
 import {NgOptimizedImage} from "@angular/common";
+import { SearchProductComponent } from './share/components/search-product/search-product.component';
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
 
 
 
@@ -88,7 +90,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     CardProductPageComponent,
     RatingLayoutComponent,
     AddCommentesLayoutComponent,
-    LoginPageComponent
+    LoginPageComponent,
+    SearchProductComponent
 
 
   ],
@@ -112,6 +115,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
         ReactiveFormsModule,
         SocialLoginModule,
         NgOptimizedImage,
+        MatAutocompleteModule,
 
     ],
 
