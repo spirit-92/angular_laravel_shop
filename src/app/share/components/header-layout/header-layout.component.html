@@ -14,7 +14,6 @@
           <a routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}"
              routerLink="/account/user/registration" mat-raised-button href="javascript:void(0);">Sign-up</a>
         </mat-list-item>
-        <mat-divider [vertical]="true"></mat-divider>
       </mat-list>
     </div>
 
@@ -27,7 +26,39 @@
       <mat-list-item (click)="logout()">
         <a style="width: 100%"  mat-raised-button href="javascript:void(0);">Logout</a>
       </mat-list-item>
+      <mat-divider [vertical]="true"></mat-divider>
+      <mat-list-item [matMenuTriggerFor]="beforeMenu"  class="basket">
+        <mat-icon  class="basket_icon">shopping_basket</mat-icon>
+        <div  #basketBg class="basket__count">
+          <span #countBasket>{{ (basketService.cartState$ | async)?.total }}</span>
+        </div>
+        <mat-menu #beforeMenu="matMenu" xPosition="before">
+          <mat-list>
+            <ng-container *ngFor="let item of (basketService.cartState$ | async)?.basket">
+              <mat-list-item class="basket_items">
+                <h4>{{item.product.title}}</h4>
+                <div class="body_basket">
+                <img class="prev_product" mat-card-image [src]="item.product.prevImg" alt="prev">
+                 <span class="description_basket"> <span class="description_basket_item">Description: </span> {{item.product.description}}</span>
 
+                  <div class="item_count mb-2 mt-2">
+                    <span class="item_count_desc">Amount: </span> <span> {{item.count}}</span>
+                  </div>
+                  <div class="item_price mb-2">
+                    <span class="item_count_desc">Price: </span> <span> {{item.product.price}}$</span>
+                  </div>
+                  <div class="item_price mb-2">
+                    <span class="item_count_desc">Amount: </span> <span> {{item.product.totalPrice}}$</span>
+                  </div>
+                  <button (click)="deleteBasket(item.product_id)" mat-raised-button color="primary">Delete</button>
+                </div>
+              </mat-list-item>
+              <mat-divider class="divider_basket" [vertical]="false"></mat-divider>
+            </ng-container>
+            <div class="totalPrice"><span class="item_count_desc"> Amount : </span> <span>{{(basketService.cartState$ | async)?.totalPrice }}$ </span></div>
+          </mat-list>
+        </mat-menu>
+      </mat-list-item>
     </mat-list>
   </div>
 </header>

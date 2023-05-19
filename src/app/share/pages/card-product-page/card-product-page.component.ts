@@ -10,6 +10,8 @@ import {Product} from "../../services/interfaces/Product";
 import {environment} from "../../../../environments/environment";
 import SwiperCore, {FreeMode, Navigation, Thumbs} from "swiper";
 import {CommentsInterfaceGet} from "../../services/interfaces/Comments-interface";
+import {BasketService} from "../../services/basketService/basket.service";
+import {NgxUiLoaderService} from "ngx-ui-loader";
 
 
 SwiperCore.use([FreeMode, Navigation, Thumbs]);
@@ -42,6 +44,7 @@ export class CardProductPageComponent implements OnInit{
   constructor(
     private router: ActivatedRoute,
     public productService: ProductServiceService,
+    private basketService:BasketService,
 
   ) {
     this.evnUrl = environment.urlImg
@@ -55,20 +58,8 @@ export class CardProductPageComponent implements OnInit{
         console.log(res)
         this.product = res
        this.characteristics = JSON.parse(res.characteristics)
-    }
-    )
-
-
+    })
   }
-
-  onSwiper([swiper]: any) {
-    console.log(swiper);
-  }
-
-  onSlideChange() {
-    console.log('slide change');
-  }
-
   activeNav($event: MouseEvent) {
     let el = $event.target as Element
     let ulLeft = this.ulEl.nativeElement.getBoundingClientRect().left
@@ -100,8 +91,8 @@ export class CardProductPageComponent implements OnInit{
   }
 
 
+  addBasket(id: number,count:number) {
+    this.basketService.addBasket(id,count)
 
-
-
-
+  }
 }

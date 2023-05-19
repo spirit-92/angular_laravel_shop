@@ -25,3 +25,86 @@ header{
 .spacer {
   flex: 1 1 auto;
 }
+.mat-mdc-list-item, .mat-mdc-list-option{
+  width: auto !important;
+}
+.headerNav__right{
+  margin-right: 15px;
+}
+.basket{
+  position: relative;
+  cursor: pointer !important;
+  &__count{
+    background: #c2185b;
+    font-size: 13px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    position: absolute;
+    min-width: 25px;
+    min-height: 25px;
+    bottom: 0;
+    right: 1px;
+    font-family: 'Roboto', serif;
+    font-weight: 600;
+    span{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -46%);
+      display: block;
+    }
+  }
+  .basket_icon {
+    position: relative;
+    bottom: -3px;
+    width: 35px;
+    height: 40px;
+    font-size: 35px;
+
+  }
+}
+.mdc-list-item{
+  overflow: inherit;
+}
+.prev_product{
+  max-width: 90px;
+  max-height:100px;
+}
+.basket_items{
+  height: auto !important;
+  max-width: 320px !important;
+  h4{
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.1em;
+  }
+}
+.divider_basket{
+  margin:15px 0
+}
+.body_basket{
+  img{
+   float: left;
+    margin-right: 10px;
+    margin-top: 5px;
+  }
+  span{
+    white-space: pre-wrap;
+  }
+}
+.description_basket{
+  font-size: 12px;
+  line-height: 1;
+}
+.description_basket_item{
+  font-weight: 600;
+  font-size: 16px;
+}
+.item_count_desc{
+  font-weight: 600;
+}
+.totalPrice{
+  margin: 0 15px;
+}

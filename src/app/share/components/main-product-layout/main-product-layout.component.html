@@ -2,14 +2,14 @@
   <div class="container">
     <app-search-product style="display: flex;justify-content: center" (childEvent)="onChildEvent($event)"></app-search-product>
     <div *ngIf="products" class="row">
-      <div style="margin-bottom: 20px" *ngFor="let product of products.product" class="col-md-4">
+      <div style="margin-bottom: 20px" *ngFor="let product of products.product.data" class="col-md-4">
         <mat-card (click)="navigateCardProduct($event,product.id)" class="product">
           <mat-card-header class="d-flex justify-content-center a">
             <mat-card-title>{{product.title}}</mat-card-title>
           </mat-card-header>
 
-          <ng-container *ngIf="isObjectEmpty(product.images); else noImage">
-            <img mat-card-image [src]="product.images[0]">
+          <ng-container *ngIf="product.images; else noImage">
+            <img mat-card-image [src]="isObjectEmpty(product.images)">
           </ng-container>
 
           <ng-template #noImage>

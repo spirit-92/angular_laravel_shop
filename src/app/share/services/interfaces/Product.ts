@@ -1,5 +1,7 @@
 export interface Products {
-  "product": Product[]
+  "product": {
+    data:Product[]
+  }
   currentPage:number,
   lastPage: number,
   total:number,
@@ -38,6 +40,4 @@ export interface Product {
   "rating": number,
   "characteristics": string,
   "created_at": string
-
-
 }

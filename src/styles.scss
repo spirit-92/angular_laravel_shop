@@ -31,3 +31,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;padding: 0}
 .mdc-card__media{
   max-height: 350px;
 }
+.mat-mdc-menu-panel.mat-mdc-menu-panel{
+  max-width: 320px !important;
+}

@@ -19,7 +19,7 @@
           </swiper>
           <swiper   *ngIf="product.images.length>1 "
                   (swiper)="thumbsSwiper = $event"
-                  [spaceBetween]="10"
+                  [spaceBetween]="5"
                   [slidesPerView]="4"
                   [slidesOffsetAfter]="2"
                   [freeMode]="true"
@@ -75,7 +75,7 @@
           {{product.price}}<span class="material-icons currency">attach_money</span>
 
         </div>
-        <button class="add_basket" mat-button>
+        <button (click)="addBasket(product.id,1)" class="add_basket" mat-button>
           <span>Купить</span>
           <mat-icon>shopping_basket</mat-icon>
         </button>

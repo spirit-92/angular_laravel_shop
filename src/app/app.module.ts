@@ -50,6 +50,7 @@ import {LoginPageComponent} from "./admin/shared/components/pages/login-page/log
 import {NgOptimizedImage} from "@angular/common";
 import { SearchProductComponent } from './share/components/search-product/search-product.component';
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import {MatMenuModule} from "@angular/material/menu";
 
 
 
@@ -95,29 +96,30 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 
 
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        AdminModule,
-        BrowserAnimationsModule,
-        MatButtonModule,
-        MatListModule,
-        MatSidenavModule,
-        MatIconModule,
-        MatProgressSpinnerModule,
-        NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
-        NgxUiLoaderHttpModule,
-        MatCardModule,
-        MatPaginatorModule,
-        FormsModule,
-        MatInputModule,
-        SwiperModule,
-        ReactiveFormsModule,
-        SocialLoginModule,
-        NgOptimizedImage,
-        MatAutocompleteModule,
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    AdminModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatListModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
+    NgxUiLoaderHttpModule,
+    MatCardModule,
+    MatPaginatorModule,
+    FormsModule,
+    MatInputModule,
+    SwiperModule,
+    ReactiveFormsModule,
+    SocialLoginModule,
+    NgOptimizedImage,
+    MatAutocompleteModule,
+    MatMenuModule,
 
-    ],
+  ],
 
   providers: [
     INTERCEPTOR_PROVIDER,

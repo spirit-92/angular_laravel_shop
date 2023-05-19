@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Observable, Subject} from "rxjs";
+import {finalize, Observable, Subject, tap} from "rxjs";
 import {Product, Products} from "../interfaces/Product";
 import {environment} from "../../../../environments/environment";
 import {CommentsInterfaceGet, CommentsInterfaceSave} from "../interfaces/Comments-interface";
+import {NgxUiLoaderService} from "ngx-ui-loader";
 
 
 @Injectable({
@@ -12,7 +13,8 @@ import {CommentsInterfaceGet, CommentsInterfaceSave} from "../interfaces/Comment
 export class ProductServiceService {
   showProductByCategory = new Subject<number>()
   constructor(
-    private http:HttpClient
+    private http:HttpClient,
+    private ngxService: NgxUiLoaderService,
   ) { }
 
   public getAllProduct(page=1,showPage=9,category_id= 0):Observable<Products>{
@@ -40,6 +42,13 @@ export class ProductServiceService {
     return this.http.get<Product>(`${environment.url}product/${productId}`)
   }
   public addComment(comment:CommentsInterfaceSave):Observable<CommentsInterfaceGet>{
-    return this.http.post<CommentsInterfaceGet>(`${environment.url}product/save/comment`,comment)
+    this.ngxService.start()
+    return this.http.post<CommentsInterfaceGet>(`${environment.url}product/save/comment`,comment).pipe(
+      tap((res: CommentsInterfaceGet)=>{
+        return res
+      }),finalize(()=>{
+        this.ngxService.stop()
+      })
+    )
   }
 }

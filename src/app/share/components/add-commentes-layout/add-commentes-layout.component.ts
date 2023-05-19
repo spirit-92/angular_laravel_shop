@@ -3,6 +3,8 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ValidateFirstSpace} from "../../../admin/shared/services/customValidators/checkForstSpace";
 import {ProductServiceService} from "../../services/productService/product-service.service";
 import {CommentsInterfaceGet, CommentsInterfaceSave} from "../../services/interfaces/Comments-interface";
+import {NgxUiLoaderService} from "ngx-ui-loader";
+import {finalize, tap} from "rxjs";
 
 @Component({
   selector: 'app-add-commentes-layout',
@@ -17,7 +19,8 @@ export class AddCommentesLayoutComponent implements OnInit {
   @Output() comment:EventEmitter<CommentsInterfaceGet> = new EventEmitter<CommentsInterfaceGet>()
   saveCommets:CommentsInterfaceSave
   constructor(
-    public productService: ProductServiceService
+    public productService: ProductServiceService,
+    private ngxService: NgxUiLoaderService,
   ) {
   }
 
@@ -33,12 +36,27 @@ export class AddCommentesLayoutComponent implements OnInit {
 
   submit() {
     this.saveCommets.comment = this.form.get('comments')?.value
-    console.log(this.saveCommets.comment,'!')
+      this.ngxService.start()
     this.productService.addComment(this.saveCommets).subscribe((res:CommentsInterfaceGet) =>{
       console.log(res,'!!')
       this.comment.emit(res)
+      this.ngxService.stop()
       this.form.get('comments')?.setValue('')
     })
+
+
+    // this.http.post<BasketData>(`${environment.url}basket`, {
+    //   'product_id': product_id,
+    //   'count': count
+    // }).pipe(
+    //   tap((basket: BasketData) => {
+    //     console.log(basket);
+    //     this.cartSubject.next(basket);
+    //   }),
+    //   finalize(() => {
+    //     this.ngxService.stop();
+    //   })
+    // ).subscribe();
 
   }
 
