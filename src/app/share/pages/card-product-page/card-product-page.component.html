@@ -63,7 +63,7 @@
           </ul>
         </div>
       </div>
-      <div class="add-comments">
+      <div *ngIf="isAuth" class="add-comments">
         <app-add-commentes-layout (comment)="addComment($event)"
                                   [idProduct]="product.id"></app-add-commentes-layout>
       </div>

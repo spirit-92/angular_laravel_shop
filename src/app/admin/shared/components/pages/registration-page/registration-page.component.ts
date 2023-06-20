@@ -6,6 +6,7 @@ import {ConfirmedValidator} from "../../../services/customValidators/confirmedVa
 import {catchError, throwError} from "rxjs";
 import {RegistrationInterface} from "../../../services/interfaces/registrationInterface";
 import {Router} from "@angular/router";
+import {BasketService} from "../../../../../share/services/basketService/basket.service";
 
 
 @Component({
@@ -28,8 +29,8 @@ export class RegistrationPageComponent implements OnInit {
   constructor(
     public http:AuthService,
     private FB: FormBuilder,
-    private route:Router
-
+    private route:Router,
+   private basketService:BasketService
   ) {
     this.form = FB.group({
         email: new FormControl('', [Validators.email, Validators.required]),
@@ -102,7 +103,8 @@ export class RegistrationPageComponent implements OnInit {
    this.http.registration(this.registration).subscribe(res =>{
      console.log(res)
      this.submitedForm = false
-     this.route.navigate(['account','user','info'])
+     this.basketService.initializeCartState()
+     this.route.navigate(['/'])
    },error => {
      console.log(error)
      this.submitedForm = false

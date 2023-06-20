@@ -1,8 +1,8 @@
 import {
   Component,
   ElementRef,
-  OnInit, QueryList,
-  ViewChild, ViewChildren
+  OnInit,
+  ViewChild,
 } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {ProductServiceService} from "../../services/productService/product-service.service";
@@ -11,14 +11,13 @@ import {environment} from "../../../../environments/environment";
 import SwiperCore, {FreeMode, Navigation, Thumbs} from "swiper";
 import {CommentsInterfaceGet} from "../../services/interfaces/Comments-interface";
 import {BasketService} from "../../services/basketService/basket.service";
-import {NgxUiLoaderService} from "ngx-ui-loader";
+import {AuthService} from "../../../admin/shared/services/authService/auth.service";
+
 
 
 SwiperCore.use([FreeMode, Navigation, Thumbs]);
 
 
-class ChildDirective {
-}
 
 @Component({
   selector: 'app-card-product-page',
@@ -32,6 +31,7 @@ export class CardProductPageComponent implements OnInit{
   evnUrl: string;
   showNav: string = 'comments'
   checkUlRender = true;
+  isAuth:boolean = false
   characteristics: Array<{
     'name': string,
     'value': string
@@ -40,12 +40,12 @@ export class CardProductPageComponent implements OnInit{
   @ViewChild('nav_ul') ulEl: ElementRef;
   @ViewChild('activeLine') activeLine: ElementRef;
   @ViewChild('coomentScroll') scrollElemen:ElementRef
-  @ViewChildren('liComments') viewChildren!: QueryList<ChildDirective>;
+
   constructor(
     private router: ActivatedRoute,
     public productService: ProductServiceService,
     private basketService:BasketService,
-
+    private auth:AuthService,
   ) {
     this.evnUrl = environment.urlImg
   }
@@ -53,7 +53,8 @@ export class CardProductPageComponent implements OnInit{
   ngOnInit(): void {
     this.productId = +this.router.snapshot.params['id']
 
-
+   this.isAuth =   this.auth.isAuthenticated()
+    console.log(this.isAuth)
     this.productService.getProduct(this.productId).subscribe((res: Product) => {
         console.log(res)
         this.product = res

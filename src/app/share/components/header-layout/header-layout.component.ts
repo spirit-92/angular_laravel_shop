@@ -33,8 +33,9 @@ export class HeaderLayoutComponent implements OnInit,AfterViewChecked {
 
     this.auth.checkAuth.subscribe(res =>{
       this.isAuth = res
-    })
 
+    })
+    this.basketService.initializeCartState()
   }
 
 

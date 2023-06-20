@@ -9,6 +9,7 @@ import {
 import {environment} from "../../../../../environments/environment";
 
 import {Router} from "@angular/router";
+import {BasketService} from "../../../../share/services/basketService/basket.service";
 
 
 @Injectable({
@@ -21,11 +22,9 @@ export class AuthService {
   checkAuth = new BehaviorSubject(this.auth)
  public  checkGoogleUser = new BehaviorSubject(this.googleUser)
   constructor(
-    private http: HttpClient,
-    private route:Router,
+    private http: HttpClient
     ) {
-    // let test = this.token;
-    // console.log(test, 'this token')
+
   }
 
   get token(): string {
@@ -77,9 +76,7 @@ export class AuthService {
 
   }
 
-  test(): Observable<any> {
-    return this.http.get<any>(`${environment.url}test`, {})
-  }
+
 
   checkEmail(email: any): Observable<any> {
     return this.http.get<any>(`${environment.url}checkEmail?email=${email}`)
@@ -94,6 +91,7 @@ export class AuthService {
       const expDate = new Date(new Date().getTime() + +res.expiration * 1000)
       localStorage.setItem('b2b_token', res.token)
       localStorage.setItem('b2b_token-exp', expDate.toString())
+
       this.auth = true
     } else {
       this.logoutClearStorage()
@@ -123,7 +121,5 @@ export class AuthService {
     }))
   }
 
-  authHeader(): Observable<any> {
-    return this.checkAuth
-  }
+
 }

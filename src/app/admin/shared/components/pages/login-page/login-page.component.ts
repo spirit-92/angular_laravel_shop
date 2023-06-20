@@ -6,6 +6,7 @@ import {Router} from "@angular/router";
 import {catchError, Subscription, throwError} from "rxjs";
 import {SocialAuthService, SocialUser} from "@abacritt/angularx-social-login";
 import { GoogleLoginProvider } from "@abacritt/angularx-social-login";
+import {BasketService} from "../../../../../share/services/basketService/basket.service";
 
 
 @Component({
@@ -15,7 +16,6 @@ import { GoogleLoginProvider } from "@abacritt/angularx-social-login";
 })
 export class LoginPageComponent implements OnInit ,OnDestroy{
   email: any;
-  GoogleLoginProvider = GoogleLoginProvider;
   hide: boolean = true;
   form: FormGroup = new FormGroup({
     email: new FormControl('', [Validators.email, Validators.required]),
@@ -38,6 +38,7 @@ export class LoginPageComponent implements OnInit ,OnDestroy{
     private route:Router,
 
     private authService: SocialAuthService,
+    private basketService:BasketService
 
   ) {
   }
@@ -106,7 +107,8 @@ export class LoginPageComponent implements OnInit ,OnDestroy{
       provider:'DESKTOP'
     }
     this.auth.login(this.login).subscribe(res =>{
-      this.route.navigate(['account','user','info'])
+      this.basketService.initializeCartState()
+      this.route.navigate(['/'])
     })
   }
   signIn(userGoogle:SocialUser){
@@ -120,8 +122,8 @@ export class LoginPageComponent implements OnInit ,OnDestroy{
       }
 
       this.auth.loginGoogle(authGoogle).subscribe(res =>{
-
-        this.route.navigate(['account','user','info'])
+        this.basketService.initializeCartState()
+        this.route.navigate(['/'])
 
       },error => {
         console.log(error,'!!!!!!!!!__!!')

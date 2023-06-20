@@ -27,7 +27,7 @@
         <a style="width: 100%"  mat-raised-button href="javascript:void(0);">Logout</a>
       </mat-list-item>
       <mat-divider [vertical]="true"></mat-divider>
-      <mat-list-item [matMenuTriggerFor]="beforeMenu"  class="basket">
+      <mat-list-item  [matMenuTriggerFor]="beforeMenu"  class="basket">
         <mat-icon  class="basket_icon">shopping_basket</mat-icon>
         <div  #basketBg class="basket__count">
           <span #countBasket>{{ (basketService.cartState$ | async)?.total }}</span>

@@ -156,7 +156,7 @@ export class CreateProductComponent implements OnInit {
 
         this.form.controls['price'].setValue(Number(this.form.controls['price'].value).toFixed(2))
       }
-      console.log(this.form.controls['price'].value,'!!')
+
       this.createProductService.checkPrice(this.form.controls['price'].value).pipe(catchError(err => {
         console.log('Handling error locally and rethrowing it...', err.status);
         return throwError(err);
@@ -219,12 +219,12 @@ export class CreateProductComponent implements OnInit {
       'region_id': this.form.get('city')?.value,
       'characteristics': JSON.stringify(this.saveJson),
     }
-    console.log(this.saveProduct)
+
     let form: any = this.saveProduct
     for (let key in form) {
       formData.append(key, form[key]);
     }
-    console.log(this.form)
+
     for (let i = 0; i < 4; i++) {
       if (this.form.get(`image_${i + 1}`)?.value) {
         let file: any = this.form.get(`image_${i + 1}`)?.value
@@ -348,10 +348,9 @@ export class CreateProductComponent implements OnInit {
   }
 
   getErrorMessageImageInvalid(id: number): string[] {
-    // console.log('getErrorMessageImageInvalid', this.form.get('name_' + (id)))
+
     if (this.form.get('name_' + (id))?.hasError('checkImage')) {
-      // console.log('ERROR IMAGE', this.form.get('name_' + (id))?.hasError('checkImage'), this.form.get('name_' + (id)))
-      // console.log(this.errorImages[id-1].error)
+      console.log(this.errorImages[id - 1].error,'!!')
       return this.errorImages[id - 1].error
     }
 

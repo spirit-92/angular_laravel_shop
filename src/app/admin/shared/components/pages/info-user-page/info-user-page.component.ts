@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthService} from "../../../services/authService/auth.service";
-import {GoogleLoginProvider, SocialAuthService} from "@abacritt/angularx-social-login";
+
 
 @Component({
   selector: 'app-info-user-page',
@@ -10,15 +9,11 @@ import {GoogleLoginProvider, SocialAuthService} from "@abacritt/angularx-social-
 export class InfoUserPageComponent implements OnInit {
 
   constructor(
-    private http:AuthService,
 
-    private readonly _authService: SocialAuthService
   ) { }
 
   ngOnInit(): void {
-    this.http.test().subscribe(res =>{
-      console.log(res)
-    })
+
 
   }
 

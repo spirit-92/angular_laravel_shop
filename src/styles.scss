@@ -34,3 +34,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;padding: 0}
 .mat-mdc-menu-panel.mat-mdc-menu-panel{
   max-width: 320px !important;
 }
+.mdc-text-field--filled:not(.mdc-text-field--disabled){
+  background: none;
+}
